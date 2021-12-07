@@ -1,0 +1,102 @@
+@import "variables";
+
+.sura-name {
+    text-align: center;
+    font-size: 18px;
+    font-family: @cabin-font-family;
+}
+
+.aya {
+    
+	// font-family: traditional arabic;
+    // font-size: 14pt;
+    
+    // as an experiment, we're trying a different font
+    font-family: @normal-font-family;
+    font-size: @normal-font-size * 1.7;
+        
+    direction: rtl;
+    line-height: 180%;
+}
+
+.ayaSmaller {
+	font-size: 12pt !important;
+}
+
+.ayaMedium {
+	font-size: @normal-font-size * 1.3 !important;
+}
+
+.transcriptionMedium {
+	font-size: @normal-font-size * 0.9 !important;
+}
+
+.ayaTranscription {
+    line-height: 160%;
+}
+
+.ayaTranscriptionRegular {
+	font-size: @normal-font-size * 1.1;
+}
+
+.ayaTranscriptionSmaller {
+	font-size: 10pt;
+}
+
+.ayaTranslation {
+    line-height: 150%;
+}
+
+.ayaNum {
+    color: green;
+    font-size: smaller;
+}
+
+.right-to-left {
+	// used to force some elements into right to left format, e.g. mixed Arabic and non-Arabic
+	text-align:right;
+	direction: rtl;
+}
+
+.sign {
+    font-family: times new roman;
+    font-size: 0.9em;
+    color: #fb7600;
+}
+
+.footer {
+    text-align: center;
+    margin: 20px 0px;
+    color: #222;
+    font-family: Arial;
+    background-color: #f4f4ff;
+    border: 1px solid #ccd;
+    padding: 3px;
+    font: 12px Verdana;
+}
+
+.scribal-change-word-underline {
+	border-bottom: 3px red dotted;
+}
+
+.formulaic-highlight
+{
+	color: blue;
+}
+
+.word-correction-list-arabic
+{
+	font-size: 18pt;
+}
+
+.selected-dictionary-letter
+{
+	color: @qt-light-green;
+	font-weight: bold;
+	padding-bottom: 2px;
+	border-bottom: 2px @qt-light-green solid;
+}
+
+.transliteration_formatting_preference { // this is activated if the user turns on italics in preferences
+	font-style: italic;
+}

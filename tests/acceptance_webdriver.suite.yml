@@ -1,0 +1,34 @@
+# Variables in this file come from test_config.yml
+actor: AcceptanceWebdriverTester
+modules:
+  enabled:
+    # In order to get this working, install Chrome driver as per: <https://codeception.com/docs/modules/WebDriver#ChromeDriver>
+    # Get it running on your local machine with: chromedriver --url-base=/wd/hub
+    - WebDriver:
+        url: %main_app_url%
+        window_size: false # disabled in ChromeDriver
+        port: 9515
+        browser: chrome
+        capabilities:
+          goog:chromeOptions:
+            # args: ["allow-insecure-localhost"]
+            args: ['allow-insecure-localhost', 'start-maximized']
+            # args: ["allow-insecure-localhost","headless"]
+            # args: ["allow-insecure-localhost","headless","start-maximized"]
+    - MailCatcher
+    - Asserts
+    - Db
+    - DbHelper
+    - QTTestHelper
+    - \Helper\Unit
+  config:
+    MailCatcher:
+      # Browse here to see the test emails
+      url: 'http://127.0.0.1'
+      port: '1080'
+    Db:
+      dsn: 'mysql:host=%mysql_host%;port=%mysql_port%;dbname=%db_name%'
+      user: %db_user%
+      password: %db_password%
+    App:
+      minimum_full_name_length: '%minimum_full_name_length%'

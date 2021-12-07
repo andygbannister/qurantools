@@ -1,0 +1,616 @@
+// Styles that are used in many places across the site
+@import 'variables';
+body,
+button,
+select,
+input {
+  font-family: @normal-font-family;
+  font-size: @normal-font-size;
+}
+
+button {
+  font-size: @control-font-size; // font-family: @normal-font-family;
+  // font-size: @control-font-size;
+  margin-left: 0.5 * @margin-standard;
+  margin-right: 0.5 * @margin-standard;
+  padding: @padding-standard;
+}
+
+form {
+  margin-bottom: 1em;
+}
+
+.page-header {
+  // the -20px makes the whitesmoke background fill the width
+  // margin: 0px -20px 40px;
+  // background-color: @header-background-color;
+  padding: @padding-standard;
+  h2 {
+    font-family: @cabin-font-family;
+    text-align: center;
+    margin: 0px;
+    padding: @padding-standard 0px;
+  }
+  h3 {
+    font-family: @cabin-font-family;
+    text-align: center;
+    margin-top: 0px;
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+.page-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  a {
+    padding: 8px;
+    margin: 2px;
+    background-color: @control-not-selected-color;
+    color: black;
+    border-radius: 5px;
+  }
+  a:visited {
+    color: black;
+  }
+  a.selected {
+    background-color: @control-selected-color;
+    font-weight: bold;
+  }
+  .flex-breaker {
+    width: 100%;
+  }
+}
+
+.page-control {
+  margin: 12px 12px;
+}
+
+.qt-icon {
+  width: 16px;
+  height: 16px;
+  margin: 1px;
+}
+
+.small-margin-bottom-message {
+  margin-top: @margin-standard;
+  margin-bottom: -@margin-standard;
+}
+
+// used to put whitespace atop the big QT Logo we use on some pages
+.qt-big-logo-header {
+  margin-top: 30px;
+  margin-left: auto; // centres the logo
+  margin-right: auto; // centres the logo
+  height: 120px;
+  width: 120px;
+  display: block;
+}
+
+// the mini logo found in the menu bar and the footer
+.qt-mini-logo {
+  height: 23px;
+  width: 24px;
+}
+
+// the formatting for the h2 text/title we use on multiple pages
+.page-title-text {
+  font-family: @cabin-font-family;
+  margin: 15px 0px 15px;
+  text-align: center;
+}
+
+// formatting for places where cabin can't work
+.override-cabin-font-for-subtitles-with-transcription {
+  font-family: sans-serif;
+}
+
+// spacing for button blocks below h2 titles
+.button-block-with-spacing {
+  // margin-top: -@margin-standard;
+  margin-bottom: @margin-standard * 0.5;
+}
+
+// Used by verse_browser.php and verse_browser.php to put the search/lookup term in a nice pill shape */
+.pill-button {
+  border: 2px solid #000090;
+  border-radius: 3 * @border-radius;
+  padding: 0px @padding-standard !important;
+  text-align: center;
+  margin-right: 0px;
+  margin-left: 0px;
+  background-color: #000090;
+  color: white;
+}
+
+// used when pills are used by tags
+.pill-tag {
+  border: 2px solid #900000;
+  border-radius: 3 * @border-radius;
+  padding: 2px @padding-standard;
+  text-align: center;
+  background-color: #900000;
+  color: white;
+  display: inline-block;
+  margin-bottom: 4px;
+  border: 0.5px solid #606060;
+}
+
+a.nodec {
+  text-decoration: none;
+  color: @qt-darkest-color;
+}
+
+// The following linky_* classes are used throughout the app, although the ones with dark, no_hover, parsed_word variants are mostly only in verse_browser.php and verse_browser.php
+a.linky-parsed-word {
+  text-decoration: none;
+  color: @qt-light-green;
+  &:hover {
+    // color: @qt-dark-green;
+    color: blue;
+  }
+}
+
+a.linky-dark {
+  text-decoration: none;
+  color: white;
+  &:hover {
+    color: @qt-dark-green;
+  }
+}
+
+a.linky-light {
+  text-decoration: none;
+  color: @qt-light-green;
+  &:hover {
+    color: @qt-dark-green;
+  }
+}
+
+// linky and linky-hover are LESS mixins that can be applied in a bunch of
+// places to give linky styling, not just for <a> elements
+.linky-hover {
+  &:hover {
+    color: @qt-light-green;
+    cursor: hand;
+  }
+}
+
+.linky-green {
+  color: @qt-dark-green;
+  text-decoration: none;
+  &:hover {
+    color: @qt-light-green;
+
+    cursor: hand;
+  }
+}
+
+.linky-olive {
+  color: black;
+  text-decoration: none;
+  &:hover {
+    color: @qt-olive;
+
+    cursor: hand;
+  }
+}
+
+.linky {
+  // color: @qt-darkest-color;
+  color: black;
+  text-decoration: none;
+  .linky-hover();
+}
+
+a.linky {
+  .linky();
+}
+
+a.linky-no-hover {
+  text-decoration: none;
+  color: @qt-darkest-color;
+}
+
+// Used on home.php and for verses not found in verse.php
+#verse-picker-container {
+  #sura-picker-container {
+    width: 100%;
+    table {
+      margin-top: -1 * @margin-standard;
+      width: 100%;
+      .sura-picker-number {
+        padding: 0.7 * @padding-standard;
+        text-align: center;
+        .linky-hover();
+      }
+      .sura-picker-number.selected {
+        background-color: @title-box-background-color;
+      }
+    }
+  }
+  #aya-picker-container {
+    display: none;
+    margin: -2 * @margin-standard;
+    margin-top: @margin-standard;
+    padding-bottom: @padding-standard;
+    background-color: lighten(@qt-darkest-color, 5%);
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      .aya-picker-number {
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        .linky-hover();
+      }
+      td {
+        padding: 0.5 * @padding-standard;
+        border: 1px;
+        .tpd-title {
+          color: @qt-lightest-color;
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
+}
+
+// a utility class that can be used to replace all the custom central aligned divs with custom max-widths found throughout the site
+// it is a section (or div) that holds the main content on pages
+.page-content {
+  text-align: center;
+  margin: auto;
+
+  #_404 & {
+    max-width: 600px;
+  }
+
+  #customer-statistics & {
+    max-width: 1100px;
+  }
+
+  .about & {
+    max-width: 1000px;
+    line-height: 150%;
+  }
+
+  #about-history & {
+    text-align: left;
+  }
+
+  #cookie-policy &,
+  #home & {
+    // for #home, typically this only applies after log-out
+    max-width: 900px;
+  }
+}
+
+// Allow #verse-picker-container to work outside of a Tipped.js box */
+#verses {
+  #verse-picker-container {
+    max-width: 1000px;
+    border: 1px @qt-darkest-color solid;
+    padding: @padding-standard;
+    #aya-picker-container {
+      margin-left: -1 * @margin-standard;
+      margin-right: -1 * @margin-standard;
+    }
+  }
+}
+
+// Styles used by the "scroll to top" floating button
+#scrollTopFloatingButton {
+  /* Hidden by default */
+  display: none;
+  position: fixed;
+  bottom: 47px;
+  right: 12px;
+  /* Make sure it does not overlap */
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: @qt-light-green;
+  color: @qt-olive;
+  cursor: pointer;
+  padding: @padding-standard;
+  border-radius: 2 * @border-radius;
+  font-size: @control-font-size;
+  opacity: 0.95;
+  &:hover {
+    background-color: @qt-dark-green;
+  }
+}
+
+// Styles used by the "page navigator" floating button
+#pageNavigatorFloatingButton {
+  position: fixed;
+  right: 15px;
+  bottom: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: @qt-light-green;
+  color: @qt-olive;
+  padding: @padding-standard;
+  border-radius: 2 * @border-radius;
+  font-size: @control-font-size;
+  opacity: 0.95;
+  &:hover {
+    background-color: @qt-dark-green;
+  }
+}
+
+#pageNavigatorFixed {
+  text-align: center;
+  font-size: @control-font-size;
+  color: @qt-darkest-color;
+  a:link {
+    color: @qt-light-green;
+  }
+  a:visited {
+    color: @qt-light-green;
+  }
+  a:hover {
+    color: @qt-dark-green;
+  }
+}
+
+// The search form in textual_change_search_form.php
+.search-form {
+  margin: auto;
+  max-width: 900px;
+  border-style: solid;
+  border-width: 1px;
+  overflow: hidden;
+  padding: 2 * @padding-standard;
+}
+
+// Styles used by floating message (e.g. in preferences.php)
+#floating-message {
+  display: none;
+  position: fixed;
+  left: 50%;
+  width: 30%;
+  margin-left: -15%; // bottom: 80px;
+  top: 50%;
+  height: 20px;
+  /*set to a negative number 1/2 of your height*/
+  margin-top: -10px;
+  /* Make sure it does not overlap */
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: @qt-light-green;
+  color: @qt-olive;
+  cursor: pointer;
+  padding: 2 * @padding-standard;
+  border-radius: 2 * @border-radius;
+  font-size: @control-font-size;
+  opacity: 0.95;
+}
+
+.floating-message-higher {
+  margin-top: -50px !important;
+}
+
+.chapter-heading {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.message {
+  font-weight: bold;
+  text-align: center;
+  // default margins for messages. Overridden by classes below
+  margin-top: @margin-standard;
+  margin-bottom: @margin-standard;
+}
+
+.message-warning {
+  color: red;
+}
+
+.message-success {
+  color: @qt-light-green;
+}
+
+.message-at-top-of-interest-page-after-action {
+  margin-top: @margin-standard * 2;
+  margin-bottom: @margin-standard * 2;
+}
+
+.message-at-top-of-interest-page-after-action-less-padding {
+  margin-top: @margin-standard * 0.5;
+  margin-bottom: @margin-standard * 2;
+}
+
+.message-at-top-of-search-browse-page-after-action {
+  margin-top: @margin-standard * 1;
+  margin-bottom: -@margin-standard * 1.5;
+}
+
+.top-padding-only {
+  margin-top: @margin-standard;
+}
+
+.smaller_text_for_mini_dialogs {
+  font-size: @normal-font-size * 0.75;
+}
+
+.hidden {
+  display: none; // used if we want to simply hide an element, like the media player for word audio files
+}
+
+.verseTools {
+  display: none; // verse tools are hidden by default
+  white-space: nowrap;
+}
+
+.toggle-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  button {
+    margin: 0px;
+    border: 1px solid @qt-light-green;
+    font-size: larger;
+    padding: 2 * @padding-standard;
+
+    &.not-selected,
+    &.not-selected:focus,
+    &.not-selected:active,
+    &.not-selected:hover {
+      color: black;
+      background-color: @control-not-selected-color;
+    }
+
+    &.selected,
+    &.selected:active,
+    &.selected:focus,
+    &.selected:hover {
+      color: white;
+      background-color: @qt-light-green;
+      font-weight: bold;
+    }
+    &:nth-child(1) {
+      border-top-left-radius: 5pt;
+      border-bottom-left-radius: 5pt;
+    }
+    &:nth-last-child(1) {
+      border-top-right-radius: 5pt;
+      border-bottom-right-radius: 5pt;
+    }
+    // &:hover {
+    //   background-color: unset;
+    // }
+  }
+}
+
+.float-right {
+  float: right;
+}
+
+.source-document-text {
+  max-width: 1000px;
+
+  text-align: justify;
+
+  line-height: 200%;
+}
+
+.green-text {
+  color: @qt-light-green;
+}
+
+.gray-text {
+  color: gray;
+}
+
+/* footer and other non-menu settings (inc body tags and flex settings) */
+
+.qt-site {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 20px 0px 20px;
+  min-height: 100vh;
+  // font-family: @normal-font-family;
+}
+
+.qt-site-content,
+.qt-site-footer {
+  text-align: center; // center inline elements
+  margin: auto; // center block elements
+}
+
+.qt-site-content {
+  flex: 1;
+}
+
+.qt-site-footer {
+  width: 100%;
+}
+
+.footer-content-holder {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-top: 50px;
+  background: @qt-darkest-color;
+  color: #e0e0e0;
+  text-align: center;
+  font-size: 80%;
+  font-family: @normal-font-family;
+  a {
+    color: white;
+  }
+}
+
+.footer-icons {
+  // height: 14px;
+  // width: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  // margin-bottom: 0.6em;
+  margin-right: 1.1em;
+}
+
+.print {
+  display: none;
+}
+
+.loading {
+  display: none;
+  background: url('/images/loading_big.gif');
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -150px;
+  width: 300px;
+  height: 300px;
+  background-repeat: no-repeat;
+}
+
+.element-spinner {
+  background: url(/images/loading_big.gif);
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-size: contain;
+}
+
+@media print {
+  .footer-icons .qt-mini-logo {
+    display: none;
+  }
+  .footer-icons .qt-mini-logo.print {
+    display: inherit;
+  }
+  .print-control {
+    display: none;
+  }
+
+  .footer-content-holder {
+    background: none;
+    a {
+      color: @qt-dark-green;
+      font-size: large;
+    }
+  }
+}
+
+#popup-verse-browser {
+  overflow-y: scroll;
+  width: 900px;
+  max-height: 250px;
+  > * {
+    text-align: center;
+  }
+}

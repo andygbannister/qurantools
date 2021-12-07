@@ -1,0 +1,68 @@
+// Styles that are used in the verse browser
+@import 'variables';
+
+.interlinear-wordbox {
+	border-style:dotted;
+	border-width: 1px; 
+	border-color: #E0E0E0; 
+	
+	height: 172px;
+
+	top:0; 
+	padding: 2px; 
+	margin:1px;
+	
+	padding-top: 4px;
+	
+	display:inline-block;
+
+	font-size: @normal-font-size * 1.5;
+	text-align:center;  
+	font-style: normal; 
+	direction: ltr; 
+	line-height: 130%;	
+	
+	&:hover {
+		background-color: #f5f5dd;
+		}
+}
+
+.interlinear-wordbox-qinitials {
+	height: auto;
+}
+
+
+.interlinear-text {
+	font-size: @normal-font-size;
+	
+	.morphology {
+		font-size: @normal-font-size * 0.8;
+		color: @qt-light-green;
+	}
+	
+}
+
+.interlinear-morphology {
+	color: @qt-light-green;
+}
+
+
+.interlinear-tag-area {
+	clear:both;
+	float:right;
+	font-size: @normal-font-size;
+	line-height: 150%;	
+}
+
+.tag-area-no-transliteration {
+	float:right;
+}
+
+.table-cell-interlinear-mode {
+	width: 100%;
+}
+
+.interlinear-chrome-fix {
+// 	we have to use this as a wrapper to solve Chrome mixing up the order of floated span blocks
+	text-align: right;
+}

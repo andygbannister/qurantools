@@ -1,0 +1,42 @@
+{
+  "name": "qurantools",
+  "version": "1.0.0",
+  "description": "A world of Qur’anic research at your fingertips",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "npm": "^6.13.0"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.11.2",
+    "brunch": "^2.10.17",
+    "fingerprint-brunch": "^2.0.7",
+    "less-brunch": "^2.10.0",
+    "prettier": "^1.19.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andygbannister/qg.git"
+  },
+  "keywords": [
+    "qur'an",
+    "qur’an",
+    "quran",
+    "koran",
+    "research",
+    "islam",
+    "textual",
+    "criticism"
+  ],
+  "author": "Andy Bannister",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/qurantools/qt/issues"
+  },
+  "homepage": "https://github.com/qurantools/qt#readme"
+}

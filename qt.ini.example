@@ -1,0 +1,46 @@
+; File contains various configuration settings for Qur'an Tools
+
+[Database Connection Credentials]
+
+; for a local MySQL database
+hostname = 127.0.0.1               ; or localhost. Optionally includes the port number of the MySQL database host  eg 127.0.0.1:1234
+mysqli_login = "<mysql username>"  ; e.g. qurantools
+mysqli_password = "********"
+database = "<mySQL database name>" ; e.g. qurantools
+
+[Main App URLs]
+
+main_app_url       = http://qurantools.acme.org                   ; public-facing URL for site. No trailing slash needed
+privacy_policy_url = ;https://example.com/privacy-policy   ; URL to a privacy policy - or comment it out
+cookie_policy_url  = ;/cookie-policy                       ; URL to a cookie policy - or comment it out
+license_path       = /licenses/license.php
+terms_path         = /licenses/terms.php
+
+[Email]
+qt_admin_email  = admin@qurantools.acme.org   ; used by email_qt() function
+qt_developers[] = dev1@qurantools.acme.org    ; used by email_error_to_qt(). for multiple emails, just add extra lines
+;qt_developers[] = dev2@qurantools.acme.org
+;qt_developers[] = dev2@qurantools.acme.org
+
+
+[Google Stuff]
+
+; see https://www.google.com/recaptcha/admin/site/
+google_recaptcha_mode               = v3   ; 'v3' or 'v2_tick' - the reCAPTCHA strategy we want 
+google_recaptcha_site_key_v3        = **** ; for v3 reCAPTCHA (invisible)
+google_recaptcha_secret_key_v3      = **** ; for v3 reCAPTCHA (invisible)
+google_tag_manager_code             = GTM-*******
+
+
+[Other]
+
+is_user_registration_allowed = true     ; if true, then allow users to sign-up themselves. o/wise, users need to be manually created in the database
+is_maintenance_mode_enabled  = false    ; if true, then everything usually redirects to maintenance.php
+display_errors_locally       = false    ; only set to true for local development
+mysql_error_reporting        = 'LOG'
+minimum_full_name_length     = 7        ; combined character length of first & last name for consumer users
+show_gdpr                    = true     ; shown register.php
+gdpr_base_text               = 'By registering, you consent to receive occasional marketing and product related emails. Opt-out any time.' ; only shown if show_gdpr = true.
+maximum_password_attempts    = 5
+account_lock_time_minutes    = 15
+password_reset_text          = 'PASSWORD HAS BEEN RESET'

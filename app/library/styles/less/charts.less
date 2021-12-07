@@ -1,0 +1,146 @@
+// Styles used for charts
+@import "variables";
+// special styles just used in mini-mode
+.mini-mode {
+  .expander {
+    float: right;
+  }
+  .page-header {
+    background-color: white;
+    margin: 0px;
+    h2 {
+      padding: 0px;
+    }
+  }
+}
+
+.normal-mode {
+  min-width: 98vw; // = 90% of the viewport width (90 viewport
+}
+
+.table-controls,
+.chart-controls {
+  font-size: @control-font-size;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  a {
+    padding: 8px;
+    margin: 2px;
+    background-color: @control-not-selected-color; // color: black;
+    color: @qt-darkest-color;
+    border-radius: 5px;
+  }
+  a:visited {
+    color: black;
+  }
+  a.selected {
+    /* background-color: #4c604c; // this is one of the greens from the re-skin */
+    // background-color: darkgray;
+    background-color: @control-selected-color;
+    // font-weight: bold;
+    color: @qt-lightest-color;
+  }
+  .flex-breaker {
+    width: 100%;
+  }
+}
+
+.table-control,
+.chart-control {
+  margin: 12px 12px;
+}
+
+.provenance-legend {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: small;
+  /* next line is a hack to align the legend with the scale on the chart for a desktop. Doesn't work for mobile */
+  margin-left: 40px;
+  /* next line will be superceded in re-skin */
+  font-family: @normal-font-family;
+
+  .meccan {
+    /* next line will probably change with the re-skin */
+    color: #6060ff;
+  }
+
+  .medinan {
+    /* next line will probably change with the re-skin */
+    color: #ff9090;
+  }
+
+  .pre-transitional {
+    /* next line will probably change with the re-skin */
+    color: #008e00;
+  }
+
+  .post-transitional {
+    /* next line will probably change with the re-skin */
+    color: #ff0000;
+  }
+
+  .mixed-transitional {
+    /* next line will probably change with the re-skin */
+    color: #0000ff;
+  }
+
+  .provenance_mini {
+    /* makes the provenance legend smaller in mini mode */
+    font-size: smaller !important;
+  }
+}
+
+// .chart-container ~ .print-control,
+// .normal-mode ~ .print-control,
+// .normal-mode .print-control,
+.chart-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+// .normal-mode ~ .print-control,
+// #chartContainer ~ .print-control,
+// .normal-mode .print-control {
+//   text-align: right;
+// }
+
+.formulaic-pick-table {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 8px;
+  display: table;
+  background-color: @control-not-selected-color;
+}
+
+@media print {
+  .chart-controls {
+    display: none;
+  }
+
+  .chart-control {
+    border: 1px solid @qt-darkest-color;
+    border-radius: 5px;
+    padding: @padding-standard;
+  }
+
+  .chart-control .label:after {
+    content: ":";
+  }
+
+  .table-controls a,
+  .chart-controls a {
+    background: none;
+  }
+
+  .table-controls a.selected,
+  .chart-controls a.selected {
+    font-weight: bold;
+    color: black;
+    background: none;
+  }
+}

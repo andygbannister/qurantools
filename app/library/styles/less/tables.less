@@ -1,0 +1,333 @@
+@import 'variables';
+
+#manage-users_wrapper {
+  /*
+   Since we are using DataTables, we need to set the width of the DIV containing
+   the TABLE as well as all the other stuff that DataTables adds.
+   */
+  width: 1100px;
+}
+
+.qt-table {
+  padding-top: 1 * @margin-standard;
+
+  th,
+  td {
+    text-align: center;
+    * {
+      vertical-align: middle;
+    }
+
+    .pull-right {
+      float: right;
+    }
+
+    &.left-align {
+      text-align: left;
+    }
+
+    &.right-align {
+      text-align: right;
+    }
+  }
+
+  thead {
+    th {
+    }
+  }
+
+  tbody {
+    .row-number,
+    .authentication-type,
+    .ip-ranges {
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .user-count,
+    .login-count,
+    .last-login,
+    .activity-count,
+    .administrator,
+    .is-active {
+      text-align: center;
+    }
+
+    td {
+      font-size: 14px;
+    }
+  }
+
+  tfoot {
+    font-weight: bold;
+  }
+}
+
+/*
+ * Extra styling for DataTables to override their defaults
+ */
+
+table.dataTable thead .sorting {
+  // use a darker up/down arrow than the standard datatables graphic for the sort column
+  background-image: url('../images/sort_both.png');
+}
+
+.dataTables_wrapper .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button#all-users {
+    font-weight: bold;
+  }
+}
+
+/**
+ * These styles are intended to mimic #pageNavigatorFloatingButton
+*/
+
+.dataTables_wrapper .dataTables_paginate {
+  position: fixed;
+  right: 15px;
+  bottom: 10px;
+  z-index: 99;
+  background-color: @qt-light-green;
+  color: @qt-olive;
+  padding: @padding-standard;
+  border-radius: 2 * @border-radius;
+  font-size: @control-font-size;
+  opacity: 0.95;
+
+  .paginate_button {
+    padding: 0px;
+
+    &:hover {
+      color: @qt-light-green !important;
+      background: none;
+      border: none;
+    }
+  }
+
+  .paginate_button.current {
+    background: none;
+    border: none;
+    font-weight: bold;
+    color: @qt-olive !important;
+
+    &:hover {
+      background: none;
+      border: none;
+    }
+  }
+
+  .paginate_button.previous,
+  .paginate_button.previous:hover {
+    background: none;
+    border: none;
+    color: @qt-olive !important;
+  }
+
+  &:hover {
+    background-color: @qt-dark-green;
+  }
+}
+
+/* 	TABLE CSS DEFINITION */
+
+.floatingTableHeader {
+  position: fixed;
+  top: 40px;
+  visibility: hidden;
+}
+
+/* creates a small margin between the floating table header row and the website app header */
+
+.table-header-row {
+  border-top: 1px solid gray;
+}
+
+.hoverTable {
+  border-collapse: collapse;
+  max-width: 1300px;
+
+  th {
+    background: @title-box-background-color;
+    border: 1px solid gray;
+    font-family: @normal-font-family;
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  td {
+    border: 1px solid #b0b0b0;
+    padding: 6px;
+  }
+}
+
+.tightTable td {
+  padding: 3px !important;
+}
+
+.fixedTable {
+  table-layout: fixed !important;
+  word-wrap: break-word;
+}
+
+/* table container div and fixed cols solves wide table persistent header issues */
+
+.tableContainer {
+  width: 1300px;
+}
+
+/* Define the default colours for all the table rows */
+
+.hoverTable tr:nth-child(even) {
+  background: #ffffff;
+}
+
+.hoverTable tr:nth-child(odd) {
+  background: #f8f8f8;
+}
+
+// define rules for the complex table (split rows such like) used when listing
+// intertextual sources
+
+.complexIntertextTable_Light {
+  background: white;
+}
+
+.complexInterTextTable_Dark {
+  background-color: #f8f8f8;
+}
+
+.complexIntertextTable tr:hover td {
+  background-color: #f5f5dd;
+}
+
+.thickBorder {
+  border-bottom: 2px solid #606060 !important;
+}
+
+/* Define the hover highlight color for the table row */
+
+.hoverTable tr:hover {
+  background-color: #f5f5dd;
+}
+
+/* 		TABLE CSS DEFINITION */
+
+/* 		A MUCH MORE MINIMALISTIC TABLE USED BY THE VERSE BROWSER */
+
+.verseBrowserTable {
+  border-collapse: collapse;
+}
+
+.verseBrowserTable td {
+  border-collapse: collapse;
+  padding: 6px;
+}
+
+.verseBrowserTable:not(.nohover) tr:hover {
+  background-color: #f5f5dd;
+}
+
+.verseBrowserMinWidth {
+  min-width: 97.5vw; // prevents silly narrow verse browsers if viewing just one very short verse (e.g. Q. 50:1 on its own)
+}
+
+/* 		TABLE USED BY THE PREFERENCES PAGE */
+
+table#preferences {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 2 * @margin-standard;
+
+  td {
+    padding: 6px;
+    border-top: 1px solid #b0b0b0;
+    border-bottom: 1px solid #b0b0b0;
+
+    .preferences-button {
+      width: 150px;
+      float: right;
+      padding: 3px 6px;
+      font-size: 14px;
+    }
+    button.preferences-button {
+      margin-right: 0px;
+    }
+  }
+
+  td:first-child {
+    border: 1px solid #b0b0b0;
+  }
+
+  td:last-child {
+    border-right: 1px solid #b0b0b0;
+  }
+
+  th {
+    border: 1px solid gray;
+    font-family: @normal-font-family;
+    font-size: 15px;
+    padding: 8px;
+    background: #c0c0c0;
+  }
+}
+
+.formula-popup-list-table {
+  border-collapse: collapse;
+
+  td {
+    color: white;
+    border: 1px solid #202020;
+    padding: 4px;
+    font-size: @normal-font-size * 0.75;
+  }
+}
+
+.wordCorrectionTableMedium {
+  font-size: 15pt;
+  vertical-align: top;
+}
+
+.wordCorrectionTableLarge {
+  font-size: 20pt;
+}
+
+#intertext-container {
+  #intertext-scroller {
+    min-width: 680px;
+    min-height: 200px;
+  }
+}
+
+#intertext-table {
+  tbody {
+    font-size: small;
+  }
+}
+
+/* 		USED BY login_logs.php */
+
+#login-logs-page {
+  #search-term {
+    width: 220px;
+  }
+
+  table#login-logs {
+    th a.table-sorter img {
+      margin-left: 3px;
+    }
+    td {
+      text-align: center;
+    }
+  }
+}
+
+/* Used by word_correction_logs.php */
+.qt-table td button {
+  padding: 2px;
+  margin: 2px;
+  font-size: smaller;
+}
