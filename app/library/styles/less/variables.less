@@ -1,0 +1,38 @@
+/* standard values used across application */
+
+@normal-font-family: Arial, Helvetica, sans-serif;
+// as we slowly phase Cabin in (menus, headers at first) we'll use this font family in such places
+@cabin-font-family: Cabin, Arial, Helvetica, sans-serif;
+@normal-font-size: 14px;
+@control-font-size: @normal-font-size * 1.1; //font size for input controls on forms/ buttons
+@border-radius: 5px;
+@padding-standard: 0.5em;
+@margin-standard: 0.5em;
+
+/* palette of colours from style guide */
+@qt-darkest-color: #2e1f07;
+@qt-dark-green: #4c604c;
+@qt-light-green: #689862;
+@qt-olive: #e6e1dc;
+@qt-lightest-color: #fafcfa;
+@qt-warning-color: orange;
+@highlight-box-background-color: @qt-lightest-color;
+@title-box-background-color: @qt-olive;
+@button-color: @qt-olive;
+@border-color: @qt-darkest-color;
+@header-background-color: @qt-lightest-color;
+@control-selected-color: @qt-light-green;
+@control-not-selected-color: @qt-olive;
+
+/* heights of position:fixed elements that we need to add spacer divs for for desktop screen width */
+@menubar-height: 43px;
+@formula-summary-height: 25px;
+@verses-and-search-buttons-verses-height: 83px; // height if the text on the buttons is only one line
+@verses-and-search-buttons-search-height: 99px; // height if the text on the buttons is only one line
+// @verses-and-search-buttons-search-height: 113px; // height if the text on the buttons is only one line
+
+/* heights of position:fixed elements that we need to add spacer divs for for iPhone 6s screen width in landscape mode */
+@menubar-height-narrow: 102px;
+@verses-and-search-buttons-verses-height-narrow: 119px; // height if the text on the buttons is only one line
+@verses-and-search-buttons-search-height-narrow: 117px; // height if the text on the buttons is only one line
+// @verses-and-search-buttons-search-height-narrow: 167px; // height if the text on the buttons is only one line

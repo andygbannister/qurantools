@@ -1,0 +1,38 @@
+# IDE config or development only config/binary files
+**/.DS_Store
+.vscode/
+.php_cs.cache
+xdebug.ini
+QT MySQL Session.sql
+database/dump/
+chromedriver
+composer.phar
+app/phpinfo.php
+*.psd
+*.eps
+*.ai
+screenlog.*
+
+# Development only
+db_test.php
+phpinfo.php
+.php-cs-fixer.cache
+
+# automatically recreated library files
+node_modules/
+vendor/
+
+# secret files
+qt.ini*
+!qt.ini.example
+*.pem
+test_config.yml*
+!test_config.yml.example
+server.crt
+server.key
+
+# server specific files
+.htaccess
+error_log
+app/.htaccess
+BingSiteAuth.xml

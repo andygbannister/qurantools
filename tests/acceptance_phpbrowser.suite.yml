@@ -1,0 +1,26 @@
+# Variables in this file come from test_config.yml
+actor: AcceptancePhpbrowserTester
+modules:
+  enabled:
+    - PhpBrowser:
+        url: %main_app_url%
+    - \Helper\Acceptance_phpbrowser
+    - \Helper\Unit
+    - Asserts
+    - MailCatcher
+    - Db
+    - DbHelper
+    - QTTestHelper
+    - REST:
+        depends: PhpBrowser
+  config:
+    MailCatcher:
+      # Browse here to see the test emails
+      url: "http://127.0.0.1"
+      port: '1080'
+    Db:
+      dsn: "mysql:host=%mysql_host%;port=%mysql_port%;dbname=%db_name%"
+      user: %db_user%
+      password: %db_password%
+    App:
+      trial_length_days: '%trial_length_days%'

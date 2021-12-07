@@ -1,0 +1,91 @@
+@import 'variables';
+.dialog-box {
+  background-color: white;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000;
+  z-index: 1;
+  display: none;
+  margin: auto auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  padding: 8px;
+  text-align: center;
+  width: 500px;
+  h3 {
+    margin-top: @margin-standard;
+    margin-bottom: @margin-standard;
+    font-family: @cabin-font-family;
+    font-size: @normal-font-size * 1.2;
+  }
+  button {
+    margin: 4px;
+    padding: 4px;
+  }
+  .form {
+    padding: 3 * @padding-standard 6 * @padding-standard;
+    margin: 3 * @padding-standard;
+    max-width: unset;
+  }
+}
+
+// These styles will likely be obsolete after revamping user_management.php
+#PASSWORD_PANEL,
+#RESET_PASSWORD_PANEL,
+#DELETE_USER_PANEL {
+  display: block;
+}
+
+#update-user-dialog {
+  display: block;
+}
+
+#FORMULAIC_PANEL {
+  background-color: #e0e0e0;
+  margin-left: 0px;
+  width: 410px;
+}
+
+#ANALYTICS_PANEL {
+  background-color: #e0e0e0;
+  width: 270px;
+  position: absolute;
+  margin-right: 0px;
+}
+
+#TAGS_PANEL {
+  background-color: #e0e0e0;
+  width: 270px;
+  position: absolute;
+  margin-right: 50px;
+}
+
+.analytics-button {
+  width: 267px;
+  font-size: 12px;
+  margin: 4px;
+}
+
+.tag-popup-panel {
+  overflow: auto;
+  max-height: 200px;
+  width: 270px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.user-detail-pane-table-header {
+  width: 880px;
+  border: 1px solid black;
+}
+
+.user-detail-pane-table-content {
+  overflow: auto;
+  max-height: 600px;
+  width: 880px;
+  border: 1px solid black;
+  margin-bottom: 5px;
+}

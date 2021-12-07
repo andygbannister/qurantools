@@ -1,0 +1,25 @@
+// Styles that are used for the Flash
+@import "variables";
+
+#flash {
+  border: 1px solid black;
+  margin: 2 * @margin-standard 0;
+
+  &.alert {
+    background-color: @qt-warning-color;
+  }
+
+  &.notice {
+    background-color: @qt-light-green;
+  }
+
+  p {
+    margin: @margin-standard;
+  }
+
+  .close-button {
+    margin-right: 0.3em;
+    float: right;
+    cursor: pointer;
+  }
+}

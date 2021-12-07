@@ -1,0 +1,23 @@
+# These are parameters used for codeception testing. Some of them it would
+# be good to get out of qt.ini rather than this file, but it's easier for
+# codeception to access this file than qt.ini. That would require writing 
+# a standalone function to read the qt.ini file that both codeception and
+# config.php used. This could be done, but to date, has not.
+
+# However, this file allows us to use a different database connection for 
+# testing than qt.ini uses. At time of writing, a different database 
+# connection is NOT being used (which means the tests run on a local development
+# database rather than in a dedicated test database that is reset for every 
+# test), but it wouldn't be hard to set up.
+
+main_app_url: http://qurantools.local/ # A local URL to hit for acceptance testing
+mysql_host: 127.0.0.1
+mysql_port: 3306
+db_name: qurantools                    # MySQL database name
+db_user: qurantools                    # MySQL user
+db_password: ******                    # password for that MySQL user
+
+# the following config values may be better to eventually get from qt.ini
+trial_length_days: 14                  # length of free trial in days. 
+minimum_full_name_length: 7            # combined character length of first and
+                                       # last name for consumer users

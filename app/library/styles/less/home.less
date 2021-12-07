@@ -1,0 +1,281 @@
+@import "variables";
+@import (reference) "common";
+#home-content {
+  width: 640px; // Not great to do this since this won't resize as the page changes width
+  border: 0px solid #000000;
+  line-height: 120%;
+  .mainLogo {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+  }
+  #search-controls {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    #left-side-controls,
+    #right-side-controls {
+      display: flex;
+      flex-direction: column;
+    }
+    #left-side-controls {
+      margin-right: @margin-standard;
+      flex-grow: 1;
+    }
+  }
+  form {
+    button,
+    input {
+      font-size: @control-font-size + 2em;
+      padding: @padding-standard;
+      margin-bottom: @margin-standard;
+    }
+    a#ok-button {
+      .linky;
+      font-size: @control-font-size + 2em;
+      background-image: url("/images/qt-mini-logo.png");
+      background-size: 1.5em;
+      background-position: @padding-standard;
+      background-repeat: no-repeat;
+      padding: @padding-standard;
+      line-height: 2.5em - (2 * @padding-standard);
+      color: white;
+      padding-left: 2.5em;
+      background-color: @qt-dark-green;
+      margin-bottom: @margin-standard;
+    }
+  }
+  #drop-down-controls,
+  #easy-search {
+    display: inline;
+    font-size: smaller;
+    text-align: left;
+    a {
+      margin-right: 2 * @margin-standard;
+    }
+  }
+  #info-area {
+    display: flex;
+    flex-direction: row;
+    #tipped-expander {
+      width: 0px;
+    }
+    #quick-tips {
+      border: 1px solid @border-color;
+      display: none;
+      background-color: @highlight-box-background-color;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+      margin: 40px;
+      margin-top: 80px;
+      div {
+        padding: @padding-standard;
+      }
+      .header {
+        text-align: center;
+        font-weight: bold;
+        font-size: larger;
+        background-color: @title-box-background-color;
+        margin-bottom: 0px;
+        .hide-quick-tips {
+          float: right;
+          color: black;
+        }
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        text-align: left;
+        min-height: 100px;
+        min-width: 560px;
+        .example {
+          margin-left: 20px;
+          font-weight: bold;
+          a {
+            .linky();
+          }
+        }
+      }
+      .footer {
+        border: 0px;
+        background-color: transparent;
+        font-size: @control-font-size; // override settings from arabic.css
+        font-family: @normal-font-family; // override settings from arabic.css
+        margin: @margin-standard;
+        position: relative;
+        text-align: left;
+        .quick-tip-navigation {
+          position: absolute;
+          right: 0px;
+          top: -4px;
+          a.button {
+            padding: @padding-standard;
+            margin: 2px;
+            background-color: @button-color;
+            border-radius: @border-radius;
+            color: black;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tipped-container .tipped-scroller {
+  border: 1px solid @border-color;
+  overflow-y: scroll;
+  table {
+    width: 100%;
+    border: 0px;
+    margin-bottom: @margin-standard;
+    td a.linky {
+      font-size: small;
+    }
+  }
+  .delete {
+    margin: @margin-standard;
+    font-weight: bold;
+  }
+}
+
+#bookmarks-container {
+  #bookmarks-scroller {
+    min-width: 400px;
+    height: 250px;
+  }
+}
+
+#history-container {
+  #history-scroller {
+    min-width: 300px;
+    height: 250px;
+  }
+}
+
+#search-commands-container {
+  display: none;
+  z-index: 100;
+  #search-commands {
+    display: flex;
+    flex-direction: row;
+    .left {
+      margin-right: 20px;
+    }
+  }
+}
+
+#tags-container {
+  display: none;
+  z-index: 100;
+  #tags-scroller {
+    min-width: 300px;
+    height: 250px;
+  }
+}
+
+#roots-container {
+  display: none;
+  #roots-scroller {
+    height: 300px;
+    .header {
+      background-color: @title-box-background-color;
+      text-align: center;
+      td {
+        padding: 0px;
+        .title {
+          margin-top: 0.5 * @margin-standard;
+          margin-bottom: 0.5 * @margin-standard;
+          font-size: larger;
+          font-weight: bold;
+        }
+      }
+    }
+    td {
+      padding: 0.5 * @padding-standard;
+      a.linky {
+        font-size: small;
+      }
+    }
+  }
+}
+
+#keyboard-container {
+  display: none;
+  #flipper {
+    text-align: right;
+  }
+  #keyboard {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2 * @margin-standard;
+    margin-bottom: 2 * @margin-standard;
+    font-size: larger;
+    .column {
+      display: flex;
+      flex-direction: column;
+      border: solid @qt-darkest-color;
+      border-width: 1px 0px 1px 1px;
+      &:last-child {
+        // border-width: 1px;
+        border-right-width: 1px;
+      }
+      & > * {
+        border: solid @qt-darkest-color;
+        padding: 0.5 * @padding-standard;
+        border-width: 0px 0px 1px 0px;
+        cursor: pointer;
+        text-align: center;
+      }
+      & > div:hover {
+        color: @qt-light-green;
+      }
+      .arabic-letter {
+        background-color: @qt-olive;
+      }
+      .substitute-translit {
+        // background-color: @qt-light-green;
+        background-color: darken(@qt-olive, 10%);
+      }
+      .buckwalter-letter {
+        // background-color: @qt-light-green;
+        border-width: 0px;
+        background-color: darken(@qt-olive, 10%);
+      }
+    }
+  }
+}
+
+#extra-characters {
+  overflow-y: scroll;
+  height: 250px;
+  > * {
+    text-align: center;
+  }
+  .arabic-glyph {
+    font-size: x-large;
+  }
+}
+
+.commandHelpTextHomePage {
+  font-size: @control-font-size;
+  width: 600px;
+}
+
+#transcription-action-needed-dan {
+  padding: 1.2 * @padding-standard;
+  text-align: center;
+  font-weight: bold;
+}
+
+.message_block_home_page {
+  margin: 0 auto;
+  padding: 6px 9px;
+  border: 1px solid @qt-light-green;
+  background-color: @qt-olive;
+  width: 600px;
+  line-height: 150%;
+}

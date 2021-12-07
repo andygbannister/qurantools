@@ -1,0 +1,218 @@
+// @import url(https://fonts.googleapis.com/css?family=Roboto);
+@import 'variables';
+
+// Quite often cancelButton is being used as an ID, but a class would be a better choice
+.form button.cancel-button,
+#cancelButton,
+.cancel-button {
+  background: rgba(191, 49, 49, 1);
+}
+
+// Quite often cancelButton is being used as an ID, but a class would be a better choice
+.form button.cancel-button:hover,
+#cancelButton:hover,
+.cancel-button:hover {
+  background: rgba(111, 55, 55, 1);
+}
+
+#login-forms {
+  width: 410px;
+
+  .heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: initial;
+    margin-bottom: 2 * @margin-standard;
+
+    img {
+      margin-left: @margin-standard;
+    }
+  }
+
+  // // used when there are two 'login' boxes on login.php
+  // .login-type {
+  //   &:extend(.form-box);
+  //   margin: 2 * @margin-standard;
+  //   width: 360px;
+  // }
+}
+
+.form,
+.login-type {
+  background: #ffffff;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 2 * @margin-standard 4 * @margin-standard;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  font-family: @normal-font-family;
+
+  p {
+    line-height: 130%;
+  }
+
+  h3 {
+    margin-top: 0px;
+  }
+
+  input.error-message,
+  textarea.error-message,
+  select.error-message {
+    margin-bottom: 3px;
+  }
+
+  label.error-message {
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  textarea,
+  select,
+  .checkbox-group,
+  input {
+    font-family: @normal-font-family;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 @margin-standard;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    text-align: start;
+  }
+
+  input[type='checkbox'] {
+    vertical-align: middle;
+    position: relative;
+    width: 15%;
+    bottom: 1px;
+    margin-bottom: 0px;
+    font-size: 10.5pt;
+  }
+
+  input[type='submit'] {
+    background: @qt-light-green;
+    text-align: center;
+  }
+
+  input[type='date'] {
+    height: 46px;
+  }
+
+  input[type='submit']:hover {
+    background: @qt-dark-green;
+  }
+
+  input[type='text']:read-only {
+    color: dimgrey;
+  }
+
+  button {
+    font-family: @normal-font-family;
+    text-transform: uppercase;
+    outline: 0;
+    background: @qt-light-green;
+    margin: 0.5 * @margin-standard 0px;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+  }
+
+  button:hover,
+  button:active,
+  button:focus,
+  #idpSelect input[type='submit']:hover {
+    background: @qt-dark-green;
+  }
+
+  .message {
+    margin: @margin-standard 0 0;
+    color: #6a7087;
+    font-size: 12px;
+    font-weight: normal;
+
+    a {
+      color: rgba(0, 0, 255, 0.62);
+      text-decoration: none;
+    }
+  }
+
+  .message.in-between {
+    margin: @margin-standard;
+    margin-top: 0em;
+  }
+
+  // used for making notice text
+  .message.callout {
+    font-size: 10.5pt;
+    margin-bottom: @margin-standard;
+  }
+
+  .register-form {
+    display: none;
+  }
+
+  // used for wide forms that need two columns of fields
+  .two-column-panel {
+    display: flex;
+    flex-direction: row;
+
+    .pane {
+      width: 50%;
+      margin: @margin-standard;
+    }
+  }
+}
+
+// undo the max-width parameter if the form needs to be wider( e.g. has two panes)
+.wide-form {
+  max-width: unset;
+}
+
+// this usually displays in the context of the login form, but not always
+.error-message {
+  color: red;
+  margin-top: 0px;
+}
+
+// this is called 'bigger-message' but in actual fact, all it seems to do is change the colour; the font-size 10.5pt directive doesn't make the text any bigger than it would be otherwise
+.bigger-message {
+  color: #6a7087;
+  font-size: 10.5pt;
+  margin-top: 0px;
+}
+
+.PasswordWarning {
+  font-size: 11;
+  color: red;
+  margin-top: -4px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.general-button {
+  // font-family: "Roboto", sans-serif;
+  font-family: @normal-font-family;
+  text-transform: uppercase;
+  outline: 0;
+  background: rgba(17, 184, 123, 1);
+  border: 0;
+  padding: 15px;
+  color: #ffffff;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.general-button:hover {
+  background: rgba(55, 109, 89, 1);
+}

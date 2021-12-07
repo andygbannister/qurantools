@@ -1,0 +1,27 @@
+// Styles used in the admin pages
+@import "variables";
+
+table.dataTable {
+  .hide-column {
+    display: none;
+  }
+  &.log-statistics {
+    tbody tr td {
+      text-align: right;
+
+      .expired,
+      &.expired {
+        color: red;
+      }
+
+      .expiring,
+      &.expiring {
+        color: orange;
+      }
+    }
+    tbody tr td:first-child,
+    thead tr th:first-child {
+      text-align: left;
+    }
+  }
+}
