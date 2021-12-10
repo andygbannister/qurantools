@@ -28,15 +28,17 @@ Dictionary data derived in part from Project Root List (<http://www.studyquran.c
 
 Qur'an Tools is a pretty simple bare-metal PHP application. These are the general steps required for installation. See later sections for more detail.
 
-1. Install a webserver (probably Apache2), PHP7.3. MySQL 8 (or Maria DB 10.3), composer 2 and node onto your server.
+1. Install a webserver (probably Apache2), PHP7.3. MySQL 8 (or Maria DB 10.3), composer 2, Git and (optionally) Node with npm onto your server.
 1. Git clone this repo into a folder on your server such as `/home/qurantools/qurantools.acme.org`.
 1. Configure Apache to be able to access the `app` folder of this repo with the web-facing URL you want for the application, say `https://qurantools.acme.org`
 1. Create a database and user in MySQL or MariaDB, and populate it from the import found in `/database/install`.
 1. Manually create an admin user in the `USERS` table of the database.
+1. Install composer and node dependencies
 1. Configure PHP to send emails from your server.
-1. (optional) Get Google tag manager tag and ReCaptcha keys from Google
+1. Get Google tag manager tag and ReCaptcha keys from Google
 1. (optional) Put a privacy and cookies policy document on the internet somewhere. It could be somewhere this app's folder structure, or may be a link to other policies for your institution.
-1. Fill out all the fields in `qt.ini` with details from the above steps. You will probably want to set `is_user_registration_allowed` to false until you are sure all is working OK.
+1. (optional) Create .htaccess file for 404 error redirects
+1. Fill out all the fields in `qt.ini` with details from the above steps. You will want to keep `is_user_registration_allowed` as false until you are sure all is working OK.
 1. Browse the site. When asked to login, press "forgot password" and use the link that will be emailed (or shown on screen) to reset it.
 
 ### Base software install
@@ -64,33 +66,16 @@ sql_mode=TRADITIONAL
 
 See <https://dev.mysql.com/doc/refman/8.0/en/sql-mode.html#sql-mode-combo> for more info.
 
-#### Composer config
-
-Regarding Composer, there are is only one 3rd party PHP libraries that QT uses (reCAPTCHA) for production use, plus other libraries that are only used in development (e.g. Codeception). If you don't want ReCaptcha or automated testing on your server, you can do without Composer. Libraries are specified in `composer.json`. To install/update these libraries run as the owner of the `vendor` directory (but not `root`):
-
-```bash
-> cd <root directory of application>  # e.g. /home/qurantools/qurantools.acme.org
-> php composer.phar install --no-dev  # no development dependencies
-> php composer.phar install           # all dependencies
-> composer install --no-dev           # same as above, but only works if composer is installed
-```
-
-You may need to temporarily set `allow_url_fopen` in `/etc/php.ini` to `Off` before running this command. `composer.phar` will need to be in the root folder, and can be installed from <https://getcomposer.org/download/>.
-
-#### Node config
-
-Node and npm are not used for production, but are used in development, so it is optional for a production install.
-
-```bash
-> cd <root directory of application> # e.g. /home/qurantools/qurantools.acme.org
-> npm install
-```
-
 ### Git Clone
 
 If you need help forking and cloning this git repo, consult the GitHub documentation. <https://docs.github.com/en/get-started/quickstart/fork-a-repo>.
 
 We would recommend forking this repo and cloning your fork onto your server as there are likely to be a few customisations you will need to make, especially for branding.
+
+```bash
+> cd /folder/on/your/server                              # e.g /home/qurantools/www/
+> git clone git@github.com:yourname/your-qt-fork.git     # creates a folder called your-qt-fork
+```
 
 It is quite a large repo because it also contains rather a lot of binary images and PDF resources in addition to the source code and database data.
 
@@ -109,9 +94,9 @@ This totally depends on your own server set-up. But you'll likely want to make s
 ...
 # /etc/apache2/qurantools_acme_org.conf
 
-DocumentRoot /home/qurantools/qurantools.acme.org/app/
+DocumentRoot /home/qurantools/www/your-qt-fork/app/
 
-    <Directory /home/qurantools/qurantools.acme.org/app/>
+    <Directory /home/qurantools/www/>your-qt-fork/app/>
         Require all granted
         # Allow local .htaccess to override Apache configuration settings if needed
         AllowOverride all
@@ -121,7 +106,7 @@ DocumentRoot /home/qurantools/qurantools.acme.org/app/
 
 ### Create and populate database
 
-Due to Arabic character encodings, you'll need a database with utf16 encodings. 
+Due to Arabic character encodings, you'll need a database with utf16 encodings.
 
 Use whatever database name you wish; `qurantools` is just an example.
 
@@ -133,12 +118,39 @@ You'll also need to create a database user with access to this database, say `qu
 
 The database of Qur'anic information then needs to be imported into this database. First unzip `/database/install/qurantools.zip` and then import it:
 
-```SQL
+```bash
+> mysql -u qurantoolsuran -p
 mysql> USE `qurantools`; -- or whatever database name you used before
-mysql> SOURCE `/database/install/qurantools.sql`;
+mysql> SOURCE '/database/install/qurantools.sql';
 ```
 
 If `QURAN-FULL-PARSE` has trouble recreating the primary key index, try splitting up the index create command. Depending on your version of MySQL, you may see a few warnings during the import phase. They are unlikely to be important - but it may pay to check the import log just to be on the safe side.
+
+### Install 3rd party Dependencies
+
+#### Composer
+
+There are is only one 3rd party PHP library that QT uses for production use (Google ReCaptcha), plus other libraries that are only used in development (e.g. Codeception). Currently, ReCaptcha is a requirement, but you can edit this out if you like (see `/app/auth/request_password_reset`). But to minimise spammers and password hackers hitting your server, a ReCaptcha solution is recommended. Libraries are specified in `composer.json`. To install/update these libraries run as the owner of the `vendor` directory (but not `root`):
+
+```bash
+> cd /project/root  # e.g cd /home/qurantools/www/your-qt-fork/ - should contain composer.json
+> php composer.phar install --no-dev  # no development dependencies
+> php composer.phar install           # all dependencies
+> composer install --no-dev           # same as above, but only works if composer is installed glob
+```
+
+You may need to temporarily set `allow_url_fopen` in `/etc/php.ini` to `Off` before running this command. `composer.phar` will need to be in the root folder, and can be installed from <https://getcomposer.org/download/>.
+
+`composer install` may fail if you are running a version of PHP that is different what was running when `composer.lock` was built. Composer will tell you what the problem package is, and you should be able to get round it by updating it. e.g `composer update psr/container`
+
+#### Node
+
+The node packages are only required for development.
+
+```bash
+> cd /project/root  # e.g cd /home/qurantools/www/your-qt-fork/ - should contain package.json
+> npm install
+```
 
 ### Create first admin user
 
@@ -163,11 +175,15 @@ You'll be able to set the password for this account later once you've configured
 
 Quran Tools needs to send the occasional email out to users. The most important of these are for user password resets, but it can be configured to send error/debugging messages to the admin/developers using the `email_qt()` and `email_error_to_qt()` functions. Currently, Quran Tools uses PHP's `mail()` tool - which is configured in `php.ini` with `sendmail_path` et al. We are aware the there are better mailing solutions (like [PHPMailer](https://github.com/PHPMailer/PHPMailer)).
 
+Run `php -i` and look at the top of the output to see what `php.ini` file you need to edit.
+
 ### Google Keys
 
-Quran Tools has an option for capturing Google analytics usage (and anything else Google related) via [Google Tag manager](https://tagmanager.google.com/). If you want to use this, then get a Google Tag Manager Code and use it for config in `qt.ini` (see below)
+- (Optional) Quran Tools has an option for capturing Google analytics usage (and anything else Google related) via [Google Tag manager](https://tagmanager.google.com/). If you want to use this, then get a Google Tag Manager Code and use it for config in `qt.ini` (see below)
 
-Same goes for [Goggle recaptcha](https://www.google.com/recaptcha/admin) which is used to spot spam registrations. You'll need to add your site URL. Quran Tools currently only uses v3. For testing/local development, you'll need to add the URLs (preferably as a separate Google recaptcha site) as well.
+- Same goes for [Goggle recaptcha](https://www.google.com/recaptcha/admin) which is used to spot spam registrations. You'll need to add your site URL. Quran Tools currently only uses v3. For testing/local development, you'll need to add the URLs (preferably as a separate Google recaptcha site) as well. The password reset function relies on a Google ReCapthca key so this is not optional unless you edit the source code.
+
+### (Optional) Create .htaccess file for 404 error redirects
 
 ### qt.ini Configuration
 
@@ -202,7 +218,7 @@ qt_developers[] = dev1@qurantools.acme.org  ; used by email_error_to_qt(). for m
 [Google Stuff]
 
 ; see https://www.google.com/recaptcha/admin/site/
-google_recaptcha_mode          = v3          ; 'v3' or 'v2_tick'
+google_recaptcha_mode          = v3          ; 'v3' is used for password resets
 google_recaptcha_site_key_v3   = xxxx        ; for invisible V3 reCAPTCHA
 google_recaptcha_secret_key_v3 = xxxx        ; for invisible V3 reCAPTCHA
 google_tag_manager_code        = GTM-*******
@@ -210,10 +226,10 @@ google_tag_manager_code        = GTM-*******
 
 [Other]
 
-is_user_registration_allowed = true     ; if true, then allow users to sign-up themselves. o/wise, users need to be manually created in the database
+is_user_registration_allowed = false    ; if true, then allow users to sign-up themselves. o/wise, users need to be manually created in the database
 is_maintenance_mode_enabled  = false    ; if true, then everything usually redirects to maintenance.php
 display_errors_locally       = false    ; only set to true for local development
-mysql_error_reporting        = 'LOG'
+mysql_error_reporting        = OFF      ; set to LOG on development only
 minimum_full_name_length     = 7        ; combined character length of first & last name for consumer users
 show_gdpr                    = true     ; shown register.php
 gdpr_base_text               = 'By registering, you consent to receive occasional marketing and product related emails. Opt-out any time.' ; only shown if show_gdpr = true.

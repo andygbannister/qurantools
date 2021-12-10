@@ -20,24 +20,23 @@ terms_path         = /licenses/terms.php
 qt_admin_email  = admin@qurantools.acme.org   ; used by email_qt() function
 qt_developers[] = dev1@qurantools.acme.org    ; used by email_error_to_qt(). for multiple emails, just add extra lines
 ;qt_developers[] = dev2@qurantools.acme.org
-;qt_developers[] = dev2@qurantools.acme.org
 
 
 [Google Stuff]
 
 ; see https://www.google.com/recaptcha/admin/site/
-google_recaptcha_mode               = v3   ; 'v3' or 'v2_tick' - the reCAPTCHA strategy we want 
-google_recaptcha_site_key_v3        = **** ; for v3 reCAPTCHA (invisible)
-google_recaptcha_secret_key_v3      = **** ; for v3 reCAPTCHA (invisible)
-google_tag_manager_code             = GTM-*******
+google_recaptcha_mode          = v3          ; 'v3' is used for password resets
+google_recaptcha_site_key_v3   = ****        ; for v3 reCAPTCHA (invisible)
+google_recaptcha_secret_key_v3 = ****        ; for v3 reCAPTCHA (invisible)
+google_tag_manager_code        = GTM-*******
 
 
 [Other]
 
-is_user_registration_allowed = true     ; if true, then allow users to sign-up themselves. o/wise, users need to be manually created in the database
+is_user_registration_allowed = false    ; if true, then allow users to sign-up themselves. o/wise, users need to be manually created in the database
 is_maintenance_mode_enabled  = false    ; if true, then everything usually redirects to maintenance.php
 display_errors_locally       = false    ; only set to true for local development
-mysql_error_reporting        = 'LOG'
+mysql_error_reporting        = OFF      ; set to LOG on development only
 minimum_full_name_length     = 7        ; combined character length of first & last name for consumer users
 show_gdpr                    = true     ; shown register.php
 gdpr_base_text               = 'By registering, you consent to receive occasional marketing and product related emails. Opt-out any time.' ; only shown if show_gdpr = true.
