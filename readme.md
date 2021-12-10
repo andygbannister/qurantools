@@ -185,6 +185,8 @@ Run `php -i` and look at the top of the output to see what `php.ini` file you ne
 
 ### (Optional) Create .htaccess file for 404 error redirects
 
+If you are running Apache2, in order to redirect to a nice 404 page, it is recommended you use `/app/.htaccess.example` as a template for your own `.htaccess` file. Check the official documentation for Nginx and other webservers.
+
 ### qt.ini Configuration
 
 Most of the config for Quran Tools is controlled by `library/config.php` which reads config variables from a file called `qt.ini`. It lives in the server root (but definitely not `/app` - so that it can not accidentaly be displayed to users).
