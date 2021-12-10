@@ -58,6 +58,12 @@ if (isset($_POST['REGISTER_BUTTON']))
         ];
 
         $new_user  = register_consumer_user($insert_data);
+        var_dump($new_user);
+
+        if (!$new_user)
+        {
+            throw new \Exception('Something mild just happened that prevented a user from being created. Check the logs above here.');
+        }
         $page_mode = PAGE_MODE_CONSUMER_SUCCESS;
     }
     catch (\Throwable $thrown)

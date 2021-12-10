@@ -254,7 +254,7 @@ You should now be able to visit a URL like <https://qurantool.acme.org/> and try
 
 ### How to deploy changes to the site
 
-Assuming you are using git, then deploying changes to the server is just a matter of using the standard `git pull` commands. If you want to add pull hooks that rerun `composer install` and `npm install`, then go ahead, but that is not part of this set-up.
+Assuming you are using git, then deploying changes to the server is just a matter of using the standard `git pull` commands. If you want to add pull hooks that rerun `composer install` (and `npm install` if working locally), then go ahead, but that is not part of this set-up.
 
 You will probably need to know the passphrase for the private/public key that links your login on your server with your (GitHub) repo for the following Git commands.
 
@@ -276,6 +276,12 @@ Users can be tagged in the database of users with one of three levels of admin r
 | SUPERUSER | Can use all of the admin functions |
 | ADMIN | Can use most of the admin functions, largely except the ones that rebuild the parsing/tagging databases |
 | WORD_FIXER | Can only use the transliteration fix tools in the Admin menu |
+
+### Development
+
+Should you wish to make changes to Quran Tools, here are some exra notes:
+
+1. CSS (from LESS) and Javascript are compiled and built using [Brunch](https://brunch.io/). While developing run `./node_modules/brunch/bin/brunch watch`
 
 ### Testing
 
@@ -304,6 +310,8 @@ As not all of the developers involved with QT wrote tests, automated testing of 
 ```bash
 > ./vendor/bin/codecept build
 ```
+
+- You'll need to create valid ReCaptcha keys for the URL of your testing machine so that the password reset webdriver tests work. Either that or figure out a way to mock this external dependency - which would lead to a faster test anyway.
 
 - Ensure that a file called `test_config.yml` is in the same location as `qt.ini` on your testing machine. Ensure these keys exist (which closely match the contents of `qt.ini`):
 

@@ -117,12 +117,12 @@ class RegisterConsumerUserCest extends QTPageCest
 
         $I->click('REGISTER_BUTTON');
 
+        // ensure the user sees success messages
+        $I->see('Success! Your new account has been created');
+
         $new_user = $I->selectFromDatabase(
             "SELECT * FROM `USERS` WHERE `email address` = '$this->registration_email'"
         )[0];
-
-        // ensure the user sees success messages
-        $I->see('Success! Your new account has been created');
 
         // ensure the right values are in the database
         $I->seeInDatabase('USERS', [
