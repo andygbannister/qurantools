@@ -286,7 +286,8 @@ function register_user(array $insert_data): ?array
 {
     if (
         empty($insert_data['EMAIL'])
-    ) {
+    )
+    {
         throw new \Exception(
             'Arguments for register_user() must contain an email address'
         );
@@ -353,7 +354,7 @@ function insert_user(array $insert_data): ?array
                   " . (!empty($insert_data['FIRST_NAME']) ? "'" . $insert_data['FIRST_NAME'] . "'" : ' NULL ') . ",
                   " . (!empty($insert_data['LAST_NAME']) ? "'" . $insert_data['LAST_NAME'] . "'" : ' NULL ') . ",
                   '" . $insert_data["USER_TYPE"] . "',
-                  NULL,
+                  " . (!empty($insert_data['ADMINISTRATOR']) ? "'" . $insert_data['ADMINISTRATOR'] . "'" : ' NULL ') . ",
                   NULL,
                   NULL,
                   NULL,
@@ -558,7 +559,8 @@ function update_user_by_id(
     int $user_id,
     array $columns,
     array $changed_by = null
-): ?array {
+): ?array
+{
     $user_id = db_quote($user_id);
 
     // Update User Name if First or Last Name are being updated.

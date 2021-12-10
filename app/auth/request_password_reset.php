@@ -70,12 +70,9 @@ window_title('Reset Password');
                     db_quote(strtoupper($_POST['RESET_EMAIL_ADDRESS']))
                 );
 
-                // TODO: This is a bit of a security hole spotted during a tidy up
-                // in Sep 20. This code lets a malicious user know that an email does
-                // or doesn't exist. They could keep pumping email addresses in here
-                // until they don't get the 'unknown email' message. Better to just
-                // send an email to the address they give, but the content of the email
-                // would differ depending on whether the account exists or not.
+                // TODO: Better to just send an email to the address they 
+                // give, but the content of the email would differ depending 
+                // on whether the account exists or not.
                 //
                 // For more info see:
                 // https://postmarkapp.com/guides/password-reset-email-best-practices
@@ -83,9 +80,7 @@ window_title('Reset Password');
 
                 if (empty($user))
                 {
-                    $error = 'There is no known user with the email address <b>' .
-                        db_quote($_POST['RESET_EMAIL_ADDRESS']) .
-                        '</b>';
+                    $error = 'Unable to reset that email address. Please try again.';
                 }
                 else
                 {

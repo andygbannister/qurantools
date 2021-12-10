@@ -69,7 +69,8 @@ class QTTestHelper extends \Codeception\Module
         $I,
         $extra_values = [],
         $options = ['intro_watched' => true]
-    ) {
+    )
+    {
         $default_email = 'test' . rand(1, 100000) . '@example.com';
 
         $updateArray = [
@@ -121,7 +122,8 @@ class QTTestHelper extends \Codeception\Module
         $password = '12345678',
         $extra_values = ['Administrator' => 'ADMIN'],
         $options = []
-    ) {
+    )
+    {
         if (!array_key_exists('Administrator', $extra_values))
         {
             $extra_values['Administrator'] = 'ADMIN';
@@ -145,7 +147,8 @@ class QTTestHelper extends \Codeception\Module
         $I,
         $extra_values = ['Administrator' => 'SUPERUSER'],
         $options = []
-    ) {
+    )
+    {
         if (!array_key_exists('Administrator', $extra_values))
         {
             $extra_values['Administrator'] = 'SUPERUSER';
@@ -223,7 +226,8 @@ class QTTestHelper extends \Codeception\Module
             $I->grabNumRecords('USERS', [
                 'email address' => $extra_values['Email Address']
             ]) == 0
-        ) {
+        )
+        {
             $user = $this->createUser($I, $extra_values, $options);
         }
 
@@ -245,7 +249,8 @@ class QTTestHelper extends \Codeception\Module
         $I,
         $extra_values = ['Administrator' => 'ADMIN'],
         $options = []
-    ) {
+    )
+    {
         if (!array_key_exists('Administrator', $extra_values))
         {
             $extra_values['Administrator'] = 'ADMIN';
@@ -365,7 +370,8 @@ class QTTestHelper extends \Codeception\Module
     public function clearLoginLogs(
         $I,
         $to_delete = ['emails' => [], 'user_ids' => []]
-    ) {
+    )
+    {
         // add default testing emails to delete from logs
         $to_delete['emails'][] = 'superuser@example.com';
         $to_delete['emails'][] = 'user@example.com';
@@ -394,7 +400,8 @@ class QTTestHelper extends \Codeception\Module
     public function clearSearchLogs(
         $I,
         $to_delete = ['emails' => [], 'user_ids' => []]
-    ) {
+    )
+    {
         if (!empty($to_delete['user_ids']))
         {
             $sql = "DELETE FROM `USAGE-VERSES-SEARCHES` 
@@ -419,8 +426,10 @@ class QTTestHelper extends \Codeception\Module
         string $access_level = ACCESS_LEVEL_NORMAL,
         array $extra_values = [],
         array $options = []
-    ) {
-        switch ($access_level) {
+    )
+    {
+        switch ($access_level)
+        {
             case ACCESS_LEVEL_NORMAL:
                 $I->loginToQT($I, $extra_values, $options);
 
@@ -454,12 +463,47 @@ class QTTestHelper extends \Codeception\Module
         \AcceptancePhpbrowserTester $I,
         $scenario = null,
         string $term = 'test search'
-    ) {
+    )
+    {
         if (!$I->seeInCurrentUrl($I->getApplicationPage('home')))
         {
             $I->amOnPage($I->getApplicationPage('home'));
         }
 
         $I->submitForm('#pick-verse', ['SEEK' => $term]);
+    }
+
+    /**
+     * Nasty helper that deletes a user by email address or UserID
+     *
+     * @param array $args Array with keys of either 'Email Address' or "User ID'
+     *
+     */
+    public function deleteUser(
+        \AcceptancePhpbrowserTester $I,
+        array $args = null
+    ): void
+    {
+        $where  = null;
+
+        if (\array_key_exists('Email Address', $args))
+        {
+            $where = " WHERE `Email Address` = '" . $args['Email Address'] . "'";
+        }
+        else if (\array_key_exists('User ID', $args) && is_int($args['User ID']))
+        {
+            $where = " WHERE `User ID` = " . $args['User ID'];
+        }
+
+        if (empty($where))
+        {
+            return;
+        }
+
+        $sql = "DELETE FROM `USERS`" . $where;
+
+        codecept_debug($sql);
+
+        db_query($sql);
     }
 }

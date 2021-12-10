@@ -46,11 +46,15 @@ class ResetPasswordWDCest
 
         $I->click('Email me a password reset link');
 
-        $I->waitForText("There is no known user with the email address " . $unknown_email);
+        $I->waitForText("Unable to reset that email address. Please try again.");
     }
 
     /**
      * @group needs_email_server
+     * 
+     * This test will fail without a ReCaptcha key for the URL of the 
+     * development server that is running the test
+     * 
      */
     public function requestResetPasswordForKnownUser($I)
     {
@@ -62,7 +66,9 @@ class ResetPasswordWDCest
 
         $I->wait(1);
         $I->dontSee("Sorry, but something went wrong sending you a reset link.");
-        $I->waitForText("An email has been sent to you with a password reset link");
+
+        // if this fails, read the function comment above re. ReCaptcha
+        $I->waitForText("An email has been sent to you with a password reset link"); 
         $I->waitForElement("#try-to-login-again");
 
         // email stuff
