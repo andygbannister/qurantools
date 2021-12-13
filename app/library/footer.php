@@ -30,17 +30,3 @@ if (isset($page_time_start))
 echo "</div>";
 
 echo "</footer>";
-
-// echo "<BR>  ******************  SESSION ******************** <BR>";
-// var_dump($_SESSION);
-
-// echo "<BR>  ******************  POST ******************** <BR>";
-// var_dump($_POST);
-
-// echo "<BR>  ******************  SERVER ******************** <BR>";
-// var_dump($_SERVER);
-
-// foreach ($_SERVER as $key => $value)
-// {
-//     echo "$key => $value <br />";
-// }

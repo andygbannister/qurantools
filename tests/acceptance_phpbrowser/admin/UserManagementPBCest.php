@@ -40,6 +40,27 @@ class UserManagementPBCest extends QTPageCest
         );
     }
 
+    public function createsNewUser(AcceptancePhpbrowserTester $I, $scenario)
+    {
+        $I->loginAndVisitPageOfInterest($I, $scenario, $this->page_of_interest, $this->access_level);
+
+        $I->click('#create-user');
+
+        $I->fillField('USER_EMAIL', $this->email_address);
+        $I->fillField('FIRST_NAME', 'Clark');
+        $I->fillField('LAST_NAME', 'Kent');
+        $I->fillField('PASSWORD1', 'secret-squirrel');
+        $I->fillField('CONFIRM_PASSWORD', 'secret-squirrel');
+        $I->click('CREATE NEW USER');
+
+        $this->user = \get_user_by_email($this->email_address);
+
+        $I->see('A new user has been created: ' . $this->email_address, 'b');
+
+        $I->assertEquals(0, $this->user['Login Count']);
+        $I->assertEquals(0, $this->user['Fails Count']);
+    }
+
     public function handlesEmptyUserNames(AcceptancePhpbrowserTester $I, $scenario)
     {
         $this->user = $I->createUser($I, ['First Name' => '', 'Last Name' => '']);
@@ -80,7 +101,7 @@ class UserManagementPBCest extends QTPageCest
         $I->selectOption('#ADMINISTRATOR', 'ADMIN');
         $I->click('CREATE NEW USER');
 
-        $this->user   = \get_user_by_email($this->email_address);
+        $this->user = \get_user_by_email($this->email_address);
 
         $I->see('A new user has been created: ' . $this->email_address, 'b');;
         $I->see('ADMIN', "tr#user-id-" . $this->user['User ID'] . " td.administrator",);

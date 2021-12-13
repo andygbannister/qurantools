@@ -1134,9 +1134,6 @@ function get_google_recaptcha_mode(): string
  */
 function is_running_locally(): bool
 {
-    // var_dump($_SERVER);
-    // codecept_debug($_SERVER);
-
     if (strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false)
     {
         return true;
