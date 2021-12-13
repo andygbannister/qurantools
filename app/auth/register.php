@@ -58,7 +58,6 @@ if (isset($_POST['REGISTER_BUTTON']))
         ];
 
         $new_user  = register_consumer_user($insert_data);
-        var_dump($new_user);
 
         if (!$new_user)
         {

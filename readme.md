@@ -116,7 +116,7 @@ mysql> CREATE DATABASE IF NOT EXISTS `qurantools` DEFAULT CHARACTER SET utf16 CO
 
 You'll also need to create a database user with access to this database, say `qurantools`.
 
-The database of Qur'anic information then needs to be imported into this database. First unzip `/database/install/qurantools.zip` and then import it:
+The database of Qur'anic information then needs to be imported into this database. First unzip `/database/install/qurantools.zip` and then import it. After that, you will need to run all the migrations in `/database/migrations/` to apply all extra database changes that were made to the database since the original schema in the `.zip` file was created.
 
 ```bash
 > mysql -u qurantoolsuran -p
