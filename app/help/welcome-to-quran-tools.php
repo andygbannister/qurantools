@@ -110,6 +110,8 @@ require_once '../library/functions.php';
                         <li><a href="bookmarks-manager.php">My Bookmarks</a></li>
                     </ul>
                 </ul>
+                
+                <a href='help-index.php'>View a full index of all help articles</a>
 
                 </p>
 

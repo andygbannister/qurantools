@@ -386,6 +386,8 @@ include 'gtm_body.php';
         }
 
         echo "<li><a id='user-guide-link' href='/help/welcome-to-quran-tools.php' target='_blank'>Getting Started</a></li>";
+        
+        echo "<li><a id='user-guide-link' href='/help/help-index.php' target='_blank'>Help Index</a></li>";
 
         echo "<li id='about-menu'><a href='#'>About</a>";
 
