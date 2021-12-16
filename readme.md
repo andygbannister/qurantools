@@ -55,6 +55,7 @@ Some of the composer development tools require extra PHP modules to be installed
 
 If you want to get xdebug working for local development, you'll need to ensure something like `zend_extension=xdebug` is in your `php.ini` and CLI `php.ini` files. See <https://xdebug.org/docs/install>.
 
+Some of the search queries in Qur'an Tools use a lot of memory. You may need to set `memory_limit` in `php.ini` to `128M` to prevent large queries from failing.
 #### Database config
 
 At time of writing, Qur'an Tools uses Maria DB 10.3. Many of the queries in the initial application were written in a more traditional MySQL mode that is less strict about GROUP BY clauses as per <https://dev.mysql.com/doc/refman/8.0/en/group-by-handling.html>. In order for the application to run with later versions of MySQL and MariaDB that are ANSI or SQL-92 compliant, `my.cnf` will need this line added to it:
@@ -139,7 +140,7 @@ There are is only one 3rd party PHP library that QT uses for production use (Goo
 > composer install --no-dev           # same as above, but only works if composer is installed glob
 ```
 
-You may need to temporarily set `allow_url_fopen` in `/etc/php.ini` to `Off` before running this command. `composer.phar` will need to be in the root folder, and can be installed from <https://getcomposer.org/download/>.
+You may need to temporarily set `allow_url_fopen` in the relevant `php.ini` to `Off` before running this command. `composer.phar` will need to be in the root folder, and can be installed from <https://getcomposer.org/download/>.
 
 `composer install` may fail if you are running a version of PHP that is different what was running when `composer.lock` was built. Composer will tell you what the problem package is, and you should be able to get round it by updating it. e.g `composer update psr/container`
 
