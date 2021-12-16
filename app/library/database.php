@@ -44,9 +44,6 @@ function db_error($error, $redirect_to_database_error_page)
 {
     global $config;
 
-    // we first look up what to do from our config file
-    // $config = parse_ini_file(config_file_path());
-
     if (isset($config["mysql_error_reporting"]))
     {
         switch (strtoupper($config["mysql_error_reporting"]))
@@ -160,6 +157,8 @@ function db_return_row($result)
 {
     // return the next database row
 
+    // TODO: wrap this in a try clause so that if it fails (e.g. out of memory)
+    // a meaningful error message is displayed to the user
     return $result->fetch_assoc();
 }
 
