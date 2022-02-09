@@ -1184,6 +1184,6 @@ function is_user_registration_allowed(): bool
 
     else
     {
-        return filter_var($config['is_user_registration_allowed'], FILTER_VALIDATE_BOOL);
+        return filter_var($config['is_user_registration_allowed'], FILTER_VALIDATE_BOOLEAN);
     }
 }
