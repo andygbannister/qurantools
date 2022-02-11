@@ -32,7 +32,7 @@ require_once 'library/functions.php';
 
             <section class='page-body'>
 	            
-	            <p>
+	             <p>
 	                
 	               We hope you enjoy using Qur'an Tools! The project is a labour of love, the result of thousands of hours<br>
 	               of work by a dedicated team led by <a href='https://nd.academia.edu/RoyMccoyIII' target='_blank' class=linky-light>Dr. R. Michael McCoy</a> and <a href='https://melbschooltheol.academia.edu/AndrewBannister' target='_blank' class=linky-light>Dr. Andrew G. Bannister</a>.
@@ -72,6 +72,8 @@ require_once 'library/functions.php';
                     Sura provenance information (Meccan or Medinan) is assigned via the commonly used Nöldeke-Schwally
                     system (see Neal Robinson, <i>Discovering the Qur’an: A Contemporary Approach to a Veiled Text</i>
                     (London: SCM, 2003) pp60-96 esp. p77).</p>
+                    
+               
 
             </section>
 
