@@ -31,6 +31,13 @@ require_once 'library/functions.php';
             </section> <!-- .page-content -->
 
             <section class='page-body'>
+	            
+	            <p>
+	                
+	               We hope you enjoy using Qur'an Tools! The project is a labour of love, the result of thousands of hours<br>
+	               of work by a dedicated team led by <a href='https://nd.academia.edu/RoyMccoyIII' target='_blank' class=linky-light>Dr. R. Michael McCoy</a> and <a href='https://melbschooltheol.academia.edu/AndrewBannister' target='_blank' class=linky-light>Dr. Andrew G. Bannister</a>.
+	                
+                </p>
 
                 <p>Formulaic analysis is based upon the tools and techniques in<br><a
                         href='help/an-oral-formulaic-study-of-the-quran.php'
