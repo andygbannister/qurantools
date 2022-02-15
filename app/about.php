@@ -28,20 +28,24 @@ require_once 'library/functions.php';
             <section class='page-header'>
                 <img src="/images/logos/qt_logo_only.png" class="qt-big-logo-header" alt="Large QT Logo">
                 <h2 class='page-title-text'>About Qur&rsquo;an Tools</h2>
-            </section> <!-- .page-content -->
+            </section>
 
             <section class='page-body'>
-	            
-	             <p>
-	                
-	               We hope you enjoy using Qur'an Tools! The project is a labour of love, the result of thousands of hours<br>
-	               of work by a dedicated team led by <a href='https://nd.academia.edu/RoyMccoyIII' target='_blank' class=linky-light>Dr. R. Michael McCoy</a> and <a href='https://melbschooltheol.academia.edu/AndrewBannister' target='_blank' class=linky-light>Dr. Andrew G. Bannister</a>.
-	                
+
+                <p>
+
+                    We hope you enjoy using Qur'an Tools! The project is a labour of love, the result of thousands of
+                    hours<br>
+                    of work by a dedicated team led by <a href='https://nd.academia.edu/RoyMccoyIII' target='_blank'
+                        class=linky-light>Dr. R. Michael McCoy</a> and <a
+                        href='https://melbschooltheol.academia.edu/AndrewBannister' target='_blank'
+                        class=linky-light>Dr. Andrew G. Bannister</a>.
+
                 </p>
 
                 <p>Formulaic analysis is based upon the tools and techniques in<br><a
-                        href='help/an-oral-formulaic-study-of-the-quran.php'
-                        class=linky-light><i>An Oral-Formulaic Study of the Qur’an</i> (New York: Lexington, 2017
+                        href='help/an-oral-formulaic-study-of-the-quran.php' class=linky-light><i>An Oral-Formulaic
+                            Study of the Qur’an</i> (New York: Lexington, 2017
                         [2014])</a> by
                     Dr. Andrew G. Bannister.</p>
 
@@ -72,8 +76,6 @@ require_once 'library/functions.php';
                     Sura provenance information (Meccan or Medinan) is assigned via the commonly used Nöldeke-Schwally
                     system (see Neal Robinson, <i>Discovering the Qur’an: A Contemporary Approach to a Veiled Text</i>
                     (London: SCM, 2003) pp60-96 esp. p77).</p>
-                    
-               
 
             </section>
 
