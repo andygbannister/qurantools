@@ -1,6 +1,6 @@
 # Change Log
 
-## v.1.0.1 Understanding new releases
+## v.1.0.2 Understanding new releases
 
 - Added `changelog.md`
 - Removed bad HTML comment in `about.php`
