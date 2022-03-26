@@ -117,15 +117,16 @@ mysql> CREATE DATABASE IF NOT EXISTS `qurantools` DEFAULT CHARACTER SET utf16 CO
 
 You'll also need to create a database user with access to this database, say `qurantools`.
 
-The database of Qur'anic information then needs to be imported into this database. First unzip `/database/install/qurantools.zip` and then import it. After that, you will need to run all the migrations in `/database/migrations/` to apply all extra database changes that were made to the database since the original schema in the `.zip` file was created.
+The database of Qur'anic information then needs to be imported into this database.
 
 ```bash
-> mysql -u qurantoolsuran -p
-mysql> USE `qurantools`; -- or whatever database name you used before
-mysql> SOURCE '/database/install/qurantools.sql';
+> cd qt_root/database/install
+> mysql -u <database-user> -p <database-name> < install_tables.sql
 ```
 
 If `QURAN-FULL-PARSE` has trouble recreating the primary key index, try splitting up the index create command. Depending on your version of MySQL, you may see a few warnings during the import phase. They are unlikely to be important - but it may pay to check the import log just to be on the safe side.
+
+ After that, you will need to run any migrations (if there are any) in `/database/migrations/` to apply any database changes that were made to the database since the original schema was created.
 
 ### Install 3rd party Dependencies
 
@@ -158,7 +159,7 @@ The node packages are only required for development.
 To add the first admin user to the database, run some SQL like this:
 
 ```SQL
-INSERT INTO `quran-so`.`USERS` (
+INSERT INTO `qurantools`.`USERS` (
         `Email Address`,
         `First Name`,
         `Administrator`
@@ -197,7 +198,7 @@ You will need to create a copy of `qt.ini` from `qt.ini.example` in the repo, an
 ```ini
 [Database Connection Credentials]
 
-hostname        = 127.0.0.1          ; or localhost. Optionally includes the port number of the MySQL database host  eg 127.0.0.1:1234
+hostname        = 127.0.0.1          ; or localhost. Optionally includes the port number of the MySQL database host  eg 127.0.0.1:3306
 mysqli_login    = "<mysql username>" ; e.g. qurantools
 mysqli_password = "********"
 database = "<mySQL database name>"   ; e.g. qurantools
@@ -205,7 +206,7 @@ database = "<mySQL database name>"   ; e.g. qurantools
 
 [URLs and paths]
 
-main_app_url       = http://qurantools.acme.org          ; public-facing URL for site. No trailing slash needed
+main_app_url       = https://qurantools.acme.org          ; public-facing URL for site. No trailing slash needed
 privacy_policy_url = ;https://example.com/privacy-policy ; URL to a privacy policy - or comment it out
 cookie_policy_url  = ;/cookie-policy                     ; URL to a cookie policy - or comment it out
 license_path       = /licenses/license.php

@@ -1,0 +1,121 @@
+-- Create and populate tables for Qur'an Tools
+
+SELECT 'Installing: BOOKMARKS' AS 'Current Task';
+SOURCE BOOKMARKS.sql;
+
+SELECT 'Installing: BUCKWALTER-ENCODING' AS 'Current Task';
+SOURCE BUCKWALTER-ENCODING.sql;
+
+SELECT 'Installing: DICTIONARY-ENTRIES' AS 'Current Task';
+SOURCE DICTIONARY-ENTRIES.sql;
+
+SELECT 'Installing: EXACT-ARABIC-LIST' AS 'Current Task';
+SOURCE EXACT-ARABIC-LIST.sql;
+
+SELECT 'Installing: EXACT-TRANSLITERATION-LIST' AS 'Current Task';
+SOURCE EXACT-TRANSLITERATION-LIST.sql;
+
+SELECT 'Installing: FAILED-SEARCHES' AS 'Current Task';
+SOURCE FAILED-SEARCHES.sql;
+
+SELECT 'Installing: FORMULA-ARCHETYPE-LIST-LOWER' AS 'Current Task';
+SOURCE FORMULA-ARCHETYPE-LIST-LOWER.sql;
+
+SELECT 'Installing: FORMULAIC-GLOSSES' AS 'Current Task';
+SOURCE FORMULAIC-GLOSSES.sql;
+
+SELECT 'Installing: FORMULA-ID-CODES-LINKED-GLOBAL-WORDS' AS 'Current Task';
+SOURCE FORMULA-ID-CODES-LINKED-GLOBAL-WORDS.sql;
+
+SELECT 'Installing: FORMULA-LIST_1' AS 'Current Task';
+SOURCE FORMULA-LIST_1.sql;
+
+SELECT 'Installing: FORMULA-LIST_2' AS 'Current Task';
+SOURCE FORMULA-LIST_2.sql;
+
+SELECT 'Installing: HELP-PAGE-LINKS' AS 'Current Task';
+SOURCE HELP-PAGE-LINKS.sql;
+
+SELECT 'Installing: HISTORY' AS 'Current Task';
+SOURCE HISTORY.sql;
+
+SELECT 'Installing: INTERTEXTUAL-LINKS' AS 'Current Task';
+SOURCE INTERTEXTUAL-LINKS.sql;
+
+SELECT 'Installing: INTERTEXTUAL-SOURCES' AS 'Current Task';
+SOURCE INTERTEXTUAL-SOURCES.sql;
+
+SELECT 'Installing: LEMMA-LIST' AS 'Current Task';
+SOURCE LEMMA-LIST.sql;
+
+SELECT 'Installing: LOGIN-LOGS' AS 'Current Task';
+SOURCE LOGIN-LOGS.sql;
+
+SELECT 'Installing: MESSAGES' AS 'Current Task';
+SOURCE MESSAGES.sql;
+
+SELECT 'Installing: PROPER-NOUN-LIST' AS 'Current Task';
+SOURCE PROPER-NOUN-LIST.sql;
+
+SELECT 'Installing: QUICK-TIPS' AS 'Current Task';
+SOURCE QUICK-TIPS.sql;
+
+SELECT 'Installing: QURAN-DATA_1' AS 'Current Task';
+SOURCE QURAN-DATA_1.sql;
+
+SELECT 'Installing: QURAN-DATA_2' AS 'Current Task';
+SOURCE QURAN-DATA_2.sql;
+
+SELECT 'Installing: QURAN-DATA_3' AS 'Current Task';
+SOURCE QURAN-DATA_3.sql;
+
+SELECT 'Installing: QURAN-DATA_4' AS 'Current Task';
+SOURCE QURAN-DATA_4.sql;
+
+SELECT 'Installing: QURAN-FULL-PARSE_1' AS 'Current Task';
+SOURCE QURAN-FULL-PARSE_1.sql;
+
+SELECT 'Installing: QURAN-FULL-PARSE_2' AS 'Current Task';
+SOURCE QURAN-FULL-PARSE_2.sql;
+
+SELECT 'Installing: QURAN-TRANSLATION' AS 'Current Task';
+SOURCE QURAN-TRANSLATION.sql;
+
+SELECT 'Installing: QURAN-VERSE-ENDINGS' AS 'Current Task';
+SOURCE QURAN-VERSE-ENDINGS.sql;
+
+SELECT 'Installing: RENDER-FORMULAIC-DENSITY-SUMMARIES' AS 'Current Task';
+SOURCE RENDER-FORMULAIC-DENSITY-SUMMARIES.sql;
+
+SELECT 'Installing: ROOT-LIST' AS 'Current Task';
+SOURCE ROOT-LIST.sql;
+
+SELECT 'Installing: STATS-SURAS' AS 'Current Task';
+SOURCE STATS-SURAS.sql;
+
+SELECT 'Installing: SURA-DATA' AS 'Current Task';
+SOURCE SURA-DATA.sql;
+
+SELECT 'Installing: TAGGED-VERSES' AS 'Current Task';
+SOURCE TAGGED-VERSES.sql;
+
+SELECT 'Installing: TAGS' AS 'Current Task';
+SOURCE TAGS.sql;
+
+SELECT 'Installing: TOOLTIP-TEXT' AS 'Current Task';
+SOURCE TOOLTIP-TEXT.sql;
+
+SELECT 'Installing: TRANSLATION-LIST' AS 'Current Task';
+SOURCE TRANSLATION-LIST.sql;
+
+SELECT 'Installing: TRANSLITERATION-EXCEPTIONS' AS 'Current Task';
+SOURCE TRANSLITERATION-EXCEPTIONS.sql;
+
+SELECT 'Installing: USAGE' AS 'Current Task';
+SOURCE USAGE.sql;
+
+SELECT 'Installing: USAGE-VERSES-SEARCHES' AS 'Current Task';
+SOURCE USAGE-VERSES-SEARCHES.sql;
+
+SELECT 'Installing: USERS' AS 'Current Task';
+SOURCE USERS.sql;
