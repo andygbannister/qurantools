@@ -56,6 +56,7 @@ Some of the composer development tools require extra PHP modules to be installed
 If you want to get xdebug working for local development, you'll need to ensure something like `zend_extension=xdebug` is in your `php.ini` and CLI `php.ini` files. See <https://xdebug.org/docs/install>.
 
 Some of the search queries in Qur'an Tools use a lot of memory. You may need to set `memory_limit` in `php.ini` to `128M` to prevent large queries from failing.
+
 #### Database config
 
 At time of writing, Qur'an Tools uses Maria DB 10.3. Many of the queries in the initial application were written in a more traditional MySQL mode that is less strict about GROUP BY clauses as per <https://dev.mysql.com/doc/refman/8.0/en/group-by-handling.html>. In order for the application to run with later versions of MySQL and MariaDB that are ANSI or SQL-92 compliant, `my.cnf` will need this line added to it:
@@ -126,7 +127,7 @@ The database of Qur'anic information then needs to be imported into this databas
 
 If `QURAN-FULL-PARSE` has trouble recreating the primary key index, try splitting up the index create command. Depending on your version of MySQL, you may see a few warnings during the import phase. They are unlikely to be important - but it may pay to check the import log just to be on the safe side.
 
- After that, you will need to run any migrations (if there are any) in `/database/migrations/` to apply any database changes that were made to the database since the original schema was created.
+After that, you will need to run any migrations (if there are any) in `/database/migrations/` to apply any database changes that were made to the database since the original schema was created.
 
 ### Install 3rd party Dependencies
 
@@ -191,7 +192,7 @@ If you are running Apache2, in order to redirect to a nice 404 page, it is recom
 
 ### qt.ini Configuration
 
-Most of the config for Quran Tools is controlled by `library/config.php` which reads config variables from a file called `qt.ini`. It lives in the server root (but definitely not `/app` - so that it can not accidentaly be displayed to users).
+Most of the config for Quran Tools is controlled by `library/config.php` which reads config variables from a file called `qt.ini`. It lives in the server root (but definitely not `/app` - so that it can not accidentally be displayed to users).
 
 You will need to create a copy of `qt.ini` from `qt.ini.example` in the repo, and ensure that `qt.ini` is ignored in .gitignore as it contains sensitive credentials - all of which you should now know if you followed the above steps.
 
@@ -240,6 +241,14 @@ gdpr_base_text               = 'By registering, you consent to receive occasiona
 maximum_password_attempts    = 5
 account_lock_time_minutes    = 15
 password_reset_text          = 'PASSWORD HAS BEEN RESET'
+
+
+[Branding]
+
+; comment out the following lines to prevent branding appearing in the
+; application
+hosting_organisation     = 'University of X'
+hosting_organisation_url = 'https://univerity.x.edu/'
 ```
 
 These lines can also go in `config.php`, with suitable values selected:

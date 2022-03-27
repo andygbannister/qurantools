@@ -129,3 +129,21 @@ if (!defined('GOOGLE_RECAPTCHA_V3_ACTION_RESET_PASSWORD'))
 {
     define('GOOGLE_RECAPTCHA_V3_ACTION_RESET_PASSWORD', 'password_reset');
 }
+
+if ('Codeception' == ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? ''))
+{
+    // Update some config vars from codeception
+    if (isset($_SERVER['HTTP_X_HOSTING_ORGANISATION']))
+    {
+        $config['hosting_organisation'] = $_SERVER['HTTP_X_HOSTING_ORGANISATION'];
+    }
+    if (isset($_SERVER['HTTP_X_HOSTING_ORGANISATION_URL']))
+    {
+        var_dump('HTTP_X_HOSTING_ORGANISATION_URL is set');
+        $config['hosting_organisation_url'] = $_SERVER['HTTP_X_HOSTING_ORGANISATION_URL'];
+    }
+    else
+    {
+        var_dump('HTTP_X_HOSTING_ORGANISATION_URL is NOT set');
+    }
+} ;

@@ -31,7 +31,7 @@ echo "  <img src='/images/logos/qt_logo_only.png' class='qt-big-logo-header' alt
 
 echo "  <h2 class='page-title-text'>Welcome to Qur’an Tools</h2>";
 
-echo "  <div id='login-forms'>";
+echo "  <div id='login-form'>";
 echo "    <div id='consumer-login' class='login-type'>";
 
 if ($password_reset)
@@ -68,6 +68,13 @@ if (!$account_locked && !$password_reset)
         echo "      <p class='message'>Not got an account yet? <a href='register.php' id='register'>Sign up</a></p>";
     }
 
+    if (is_branded())
+    {
+        echo "<p class='message branding'>";
+        echo branding_text('This installation of Qur&rsquo;an Tools is hosted by ');
+        echo "</p>";
+    }
+
     echo '    </form>';
 }
 
@@ -85,7 +92,7 @@ if (!$password_reset)
 
 echo '    </div>'; // #consumer-login
 
-echo '  </div>'; // #login-forms
+echo '  </div>'; // #login-form
 
 include 'library/footer.php';
 ?>

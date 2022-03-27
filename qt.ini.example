@@ -3,7 +3,7 @@
 [Database Connection Credentials]
 
 ; for a local MySQL database
-hostname = 127.0.0.1               ; or localhost. Optionally includes the port number of the MySQL database host  eg 127.0.0.1:1234
+hostname = 127.0.0.1               ; or localhost. Optionally includes the port number of the MySQL database host  eg 127.0.0.1:3306
 mysqli_login = "<mysql username>"  ; e.g. qurantools
 mysqli_password = "********"
 database = "<mySQL database name>" ; e.g. qurantools
@@ -43,3 +43,11 @@ gdpr_base_text               = 'By registering, you consent to receive occasiona
 maximum_password_attempts    = 5
 account_lock_time_minutes    = 15
 password_reset_text          = 'PASSWORD HAS BEEN RESET'
+
+
+[Branding]
+
+; comment out the following lines to prevent branding appearing in the 
+; application
+hosting_organisation     = 'University of X'
+hosting_organisation_url = 'https://univerity.x.edu/'

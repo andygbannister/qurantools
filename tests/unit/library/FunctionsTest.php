@@ -558,6 +558,7 @@ class FunctionsTest extends \Codeception\Test\Unit
 
         $this->assertFalse(is_user_registration_allowed());
     }
+
     public function testIs_user_registration_allowedTrueWhenConfigSetToTrue(): void
     {
         global $config;
@@ -568,5 +569,82 @@ class FunctionsTest extends \Codeception\Test\Unit
             $config['is_user_registration_allowed'] = $value;
             $this->assertTrue(is_user_registration_allowed());
         }
+    }
+
+    // is_branded
+    public function testIs_brandedFalseWhenNoHostingOrganisationSet(): void
+    {
+        global $config;
+
+        $cases = [null, '', ' '];
+
+        foreach ($cases as $hosting_organisation)
+        {
+            $config['hosting_organisation'] = $hosting_organisation;
+
+            $this->assertFalse(is_branded(), 'Expected a hosting_organisation of "' . $hosting_organisation . '" to be unbranded');
+        }
+    }
+
+    public function testIs_brandedTrueWhenHostingOrganisationIsSet(): void
+    {
+        global $config;
+        $config['hosting_organisation'] = 'University Q';
+
+        $this->assertTrue(is_branded());
+    }
+
+    // branding_text
+    public function testBranding_textEmptyWhenNoHostingOrganisationSet(): void
+    {
+        global $config;
+
+        $hosting_organisation               = null;
+        $hosting_organisation_url           = null;
+        $config['hosting_organisation']     = $hosting_organisation;
+        $config['hosting_organisation_url'] = $hosting_organisation_url;
+
+        $this->assertEmpty(branding_text());
+    }
+
+    public function testBranding_textIncludesBoilerPlate(): void
+    {
+        global $config;
+
+        $hosting_organisation               = 'University Q';
+        $hosting_organisation_url           = null;
+        $config['hosting_organisation']     = $hosting_organisation;
+        $config['hosting_organisation_url'] = $hosting_organisation_url;
+        $boilerplate                        = 'Hosted by';
+
+        $this->assertStringContainsString($boilerplate, branding_text($boilerplate));
+    }
+
+    public function testBranding_textJustTextIfNoURLProvided(): void
+    {
+        global $config;
+
+        $hosting_organisation               = 'University Q';
+        $hosting_organisation_url           = null;
+        $config['hosting_organisation']     = $hosting_organisation;
+        $config['hosting_organisation_url'] = $hosting_organisation_url;
+        $boilerplate                        = 'Hosted by';
+
+        $this->assertStringContainsString($hosting_organisation, branding_text($boilerplate));
+        $this->assertStringNotContainsString('<a href', branding_text($boilerplate));
+    }
+
+    public function testBranding_textIncludesLinkIfURLProvided(): void
+    {
+        global $config;
+
+        $hosting_organisation               = 'University Q';
+        $hosting_organisation_url           = 'https://example.com/';
+        $config['hosting_organisation']     = $hosting_organisation;
+        $config['hosting_organisation_url'] = $hosting_organisation_url;
+        $boilerplate                        = 'Hosted by';
+
+        $this->assertStringContainsString($hosting_organisation, branding_text($boilerplate));
+        $this->assertStringContainsString('<a href', branding_text($boilerplate));
     }
 }
