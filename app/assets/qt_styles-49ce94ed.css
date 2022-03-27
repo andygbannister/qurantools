@@ -2878,11 +2878,11 @@ a.linky-no-hover {
   background: #6f3737;
 }
 /* line 18, app/library/styles/less/login_box.less */
-#login-forms {
+#login-form {
   width: 410px;
 }
 /* line 21, app/library/styles/less/login_box.less */
-#login-forms .heading {
+#login-form .heading {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2891,7 +2891,7 @@ a.linky-no-hover {
   margin-bottom: 1em;
 }
 /* line 29, app/library/styles/less/login_box.less */
-#login-forms .heading img {
+#login-form .heading img {
   margin-left: 0.5em;
 }
 /* line 42, app/library/styles/less/login_box.less */

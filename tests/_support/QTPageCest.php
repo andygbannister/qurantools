@@ -41,6 +41,12 @@ class QTPageCest
         }
 
         $this->email = 'user_' . rand(1, 10000) . '@example.com';
+
+        // set header so we know this is a phpBrowser Codeception test request
+        if (method_exists($I, 'haveHttpHeader'))
+        {
+            $I->haveHttpHeader('X-Requested-With', 'Codeception');
+        }
     }
 
     public function _after($I, $scenario)
