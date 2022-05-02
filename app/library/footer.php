@@ -19,6 +19,11 @@ echo "</a>";
 
 echo "Qur&rsquo;an Tools is an open source project, released under the <a class='linky-hover' href='" . QT_LICENSE_URL . "'>GNU General Public License</a> with <a class='linky-hover' href='" . QT_TERMS_URL . "'>terms of use</a>.";
 
+if (is_branded())
+{
+    echo branding_text(' Hosted by ');
+}
+
 // print the page rendering time if appropriate
 
 if (isset($page_time_start))

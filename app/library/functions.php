@@ -1170,7 +1170,7 @@ function is_show_google_tag_manager(?array $user): bool
 
 /**
  * Determine whether user initiated sign-ups are allowed
- * 
+ *
  * Used on register.php and login.php
  */
 function is_user_registration_allowed(): bool
@@ -1181,9 +1181,53 @@ function is_user_registration_allowed(): bool
     {
         return false;
     }
-
     else
     {
         return filter_var($config['is_user_registration_allowed'], FILTER_VALIDATE_BOOLEAN);
     }
+}
+
+/**
+ * Determine whether application has been branded or not
+ *
+ * Used on login.php and footer.php
+ */
+function is_branded(): bool
+{
+    global $config;
+
+    if (!isset($config['hosting_organisation']))
+    {
+        return false;
+    }
+
+    return !empty(trim($config['hosting_organisation']));
+}
+
+/**
+ * Shows hosting organisation and a link (if present)
+ *
+ * Used on login.php and footer.php
+ */
+function branding_text(String $boilerplate = ''): ?string
+{
+    global $config;
+
+    if (!is_branded())
+    {
+        return null;
+    }
+
+    $hosting_organisation     = $config['hosting_organisation'] ?? false;
+    $hosting_organisation_url = $config['hosting_organisation_url'] ?? false;
+
+    if ($hosting_organisation)
+    {
+        if ($hosting_organisation_url)
+        {
+            $hosting_organisation = '<a href="' . $hosting_organisation_url . '">' . $hosting_organisation . '</a>';
+        }
+        $output = $boilerplate . $hosting_organisation ;
+    }
+    return $output;
 }

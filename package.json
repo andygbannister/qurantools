@@ -1,6 +1,6 @@
 {
   "name": "qurantools",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A world of Qur’anic research at your fingertips",
   "main": "index.js",
   "directories": {

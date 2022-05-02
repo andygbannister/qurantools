@@ -16,10 +16,10 @@ modules:
   config:
     MailCatcher:
       # Browse here to see the test emails
-      url: "http://127.0.0.1"
+      url: 'http://127.0.0.1'
       port: '1080'
     Db:
-      dsn: "mysql:host=%mysql_host%;port=%mysql_port%;dbname=%db_name%"
+      dsn: 'mysql:host=%mysql_host%;port=%mysql_port%;dbname=%db_name%'
       user: %db_user%
       password: %db_password%
     App:

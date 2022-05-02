@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.0.4 Branding
+
+- Allow organisations hosting Qur'an Tool to add their own basic text branding to the site
+
+## v.1.0.3 Rejig database install
+
+- Replace zip file of initial database install with individual SQL files
+
 ## v.1.0.2 Understanding new releases
 
 - Added `changelog.md`

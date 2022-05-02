@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: quran-os
+-- ------------------------------------------------------
+-- Server version	8.0.28
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `TRANSLATION-LIST`
+--
+
+DROP TABLE IF EXISTS `TRANSLATION-LIST`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `TRANSLATION-LIST` (
+  `TRANSLATION ID` tinyint NOT NULL,
+  `TRANSLATION NAME` varchar(20) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `TRANSLATION ALL CAPS NAME` varchar(20) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `DESCRIPTION` varchar(150) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  PRIMARY KEY (`TRANSLATION NAME`),
+  UNIQUE KEY `ID INDEX` (`TRANSLATION ID`),
+  KEY `TRANSLATION ALT NAME` (`TRANSLATION ALL CAPS NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TRANSLATION-LIST`
+--
+
+LOCK TABLES `TRANSLATION-LIST` WRITE;
+/*!40000 ALTER TABLE `TRANSLATION-LIST` DISABLE KEYS */;
+INSERT INTO `TRANSLATION-LIST` VALUES (4,'Arberry','ARBERRY','Arthur John Arberry’s 1955 English translation of the Qur’an (<i>The Koran Interpreted</i>)'),(2,'Pickthall','PICKTHALL','Marmaduke William Pickthall’s 1930 English translation of the Qur’an (<i>The Meaning of the Glorious Koran</i>)'),(3,'Shakir','SHAKIR','M. H. Shakir’s English translation of the Qur’an'),(1,'Yusuf Ali','YUSUFALI','Abdullah Yusuf Ali’s English translation of the Qur’an (1934-1940, published as <i>The Holy Qur’an: Text, Translation and Commentary</i>)');
+/*!40000 ALTER TABLE `TRANSLATION-LIST` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-03-26 15:03:59
