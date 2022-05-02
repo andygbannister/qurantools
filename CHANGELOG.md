@@ -2,7 +2,7 @@
 
 ## 1.0.4 Branding
 
-- Allow organisations hosting Qur'an Tool to add their own branding to the site
+- Allow organisations hosting Qur'an Tool to add their own basic text branding to the site
 
 ## v.1.0.3 Rejig database install
 
