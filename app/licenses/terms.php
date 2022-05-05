@@ -49,23 +49,11 @@ require_once '../library/functions.php';
 #    of these files.
 </pre>
 
-                <?php
-                if (!empty(get_privacy_policy_url()))
-                  { ?>
-                <p>
-                    <a href='<?php echo get_privacy_policy_url(); ?>'
-                        class='linky-light'>Privacy
-                        Policy</a>
-                </p>
-                <?php }
-                ?>
-
             </section>
 
         </div>
-
         <?php include "library/footer.php"; ?>
-
+    </main>
 </body>
 
 </html>

@@ -2,6 +2,8 @@
 
 // $this->markTestIncomplete('This test has not been implemented yet.');
 
+use phpDocumentor\Reflection\Types\Boolean;
+
 require_once "library/functions.php";
 require_once "tests/unit/EmailHelper.php";
 
@@ -646,5 +648,37 @@ class FunctionsTest extends \Codeception\Test\Unit
 
         $this->assertStringContainsString($hosting_organisation, branding_text($boilerplate));
         $this->assertStringContainsString('<a href', branding_text($boilerplate));
+    }
+
+    /**
+     * show_contact_us_link
+     */
+
+    public function testShow_contact_us_linkTrue(): void
+    {
+        global $config;
+
+        $values = [true, 1];
+
+        foreach ($values as $show_contact_us_link)
+        {
+            $config['show_contact_us_link'] = $show_contact_us_link;
+
+            $this->assertTrue(show_contact_us_link());
+        }
+    }
+
+    public function testShow_contact_us_linkFalse(): void
+    {
+        global $config;
+
+        $values = [false, 0, '', null];
+
+        foreach ($values as $show_contact_us_link)
+        {
+            $config['show_contact_us_link'] = $show_contact_us_link;
+
+            $this->assertFalse(show_contact_us_link(), "Expected a value of $show_contact_us_link to cause show_contact_us_link() to return false.");
+        }
     }
 }

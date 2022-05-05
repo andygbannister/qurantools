@@ -51,7 +51,7 @@ if (!defined('USER_DISPLAYABLE_EXCEPTION'))
     define('USER_DISPLAYABLE_EXCEPTION', 77);
 }
 
-// Since global variables are considered poor form in PHP, these are also
+// Since global variables are considered poor form in PHP, these are 
 // defined as constants which could eventually replace the global variables -
 // although a settings table would be the best solution
 
@@ -131,7 +131,11 @@ if (!defined('GOOGLE_RECAPTCHA_V3_ACTION_RESET_PASSWORD'))
 }
 
 /**
- * Following code allows $config variables to be set within Codeception tests
+ * Allow $config variables to be set within Codeception PHPBrowser tests
+ * Webdriver doesn't support the $I->haveHttpHeader method, so we can't set
+ * headers this way.
+ * TODO: figure out a better way of injecting custom qt.ini config values into
+ * tests.
  */
 if ('Codeception' == ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? ''))
 {

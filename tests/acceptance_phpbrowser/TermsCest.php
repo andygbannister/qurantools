@@ -37,6 +37,8 @@ class TermsCest extends QTPageCest
         AcceptancePhpbrowserTester $I,
         $scenario
     ) {
+        $scenario->skip('this link is now in the legal menu');
+
         $privacy_policy_url = 'https://example.com/privacy.html';
 
         $I->haveHttpHeader('X-Privacy-Policy-URL', $privacy_policy_url);
@@ -49,6 +51,8 @@ class TermsCest extends QTPageCest
         AcceptancePhpbrowserTester $I,
         $scenario
     ) {
+        $scenario->skip('this link is now in the legal menu');
+
         // this is a hack. Sending a space sets the header, but ultimately
         // resets the configs back to nothing by the time we get to login.php
         $privacy_policy_url = ' ';

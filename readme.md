@@ -224,9 +224,10 @@ terms_path         = /licenses/terms.php
 
 [Email]
 
-qt_admin_email  = admin@qurantools.acme.org ; used by email_qt() function
-qt_developers[] = dev1@qurantools.acme.org  ; used by email_error_to_qt(). for multiple emails, just add extra lines
-;qt_developers[] = dev2@qurantools.acme.org
+show_contact_us_link = false                     ; if true, "contact us" is on the help menu
+qt_admin_email       = admin@qurantools.acme.org ; used by email_qt() function
+qt_developers[]      = dev1@qurantools.acme.org  ; used by email_error_to_qt(). for multiple emails, just add extra lines
+;qt_developers[]     = dev2@qurantools.acme.org
 
 
 [Google Stuff]
