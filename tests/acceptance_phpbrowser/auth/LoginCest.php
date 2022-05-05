@@ -39,10 +39,6 @@ class LoginCest extends QTPageCest
     public function showsNoHostingOrganisationIfNotSet(AcceptancePhpbrowserTester $I)
     {
         global $config;
-        codecept_debug($config);
-
-        $codecept_config        = [];
-        $codecept_config['foo'] = 'bar';
 
         // this is a hack. Sending a space sets the header, but ultimately
         // resets the configs back to nothing by the time we get to login.php
@@ -65,9 +61,6 @@ class LoginCest extends QTPageCest
         global $config;
         codecept_debug($config);
 
-        $codecept_config        = [];
-        $codecept_config['foo'] = 'bar';
-
         $hosting_organisation     = 'University X';
         $hosting_organisation_url = 'https://universityx.edu/';
 
@@ -88,9 +81,6 @@ class LoginCest extends QTPageCest
     {
         global $config;
         codecept_debug($config);
-
-        $codecept_config        = [];
-        $codecept_config['foo'] = 'bar';
 
         $hosting_organisation = 'University Y';
         // this is a hack. Sending a space sets the header, but ultimately

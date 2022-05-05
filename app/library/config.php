@@ -130,6 +130,9 @@ if (!defined('GOOGLE_RECAPTCHA_V3_ACTION_RESET_PASSWORD'))
     define('GOOGLE_RECAPTCHA_V3_ACTION_RESET_PASSWORD', 'password_reset');
 }
 
+/**
+ * Following code allows $config variables to be set within Codeception tests
+ */
 if ('Codeception' == ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? ''))
 {
     // Update some config vars from codeception
@@ -137,13 +140,14 @@ if ('Codeception' == ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? ''))
     {
         $config['hosting_organisation'] = $_SERVER['HTTP_X_HOSTING_ORGANISATION'];
     }
+
     if (isset($_SERVER['HTTP_X_HOSTING_ORGANISATION_URL']))
     {
-        var_dump('HTTP_X_HOSTING_ORGANISATION_URL is set');
         $config['hosting_organisation_url'] = $_SERVER['HTTP_X_HOSTING_ORGANISATION_URL'];
     }
-    else
+
+    if (isset($_SERVER['HTTP_X_PRIVACY_POLICY_URL']))
     {
-        var_dump('HTTP_X_HOSTING_ORGANISATION_URL is NOT set');
+        $config['privacy_policy_url'] = $_SERVER['HTTP_X_PRIVACY_POLICY_URL'];
     }
 } ;
