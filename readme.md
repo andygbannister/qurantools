@@ -186,6 +186,15 @@ Run `php -i` and look at the top of the output to see what `php.ini` file you ne
 
 - Same goes for [Goggle recaptcha](https://www.google.com/recaptcha/admin) which is used to spot spam registrations. You'll need to add your site URL. Quran Tools currently only uses v3. For testing/local development, you'll need to add the URLs (preferably as a separate Google recaptcha site) as well. The password reset function relies on a Google ReCapthca key so this is not optional unless you edit the source code.
 
+### Privacy Policy
+
+If you are associating a privacy policy with your install of Qur'an Tools, you should be aware that Qur'an Tools does collect the following information:
+
+- Name and email addresses
+- On login, IP addresses and time/date information
+- History of page visits and searches performed
+- If enabled in `qt.ini`, cookies for Google analytics via Google Tag Manager
+
 ### (Optional) Create .htaccess file for 404 error redirects
 
 If you are running Apache2, in order to redirect to a nice 404 page, it is recommended you use `/app/.htaccess.example` as a template for your own `.htaccess` file. Check the official documentation for Nginx and other webservers.
