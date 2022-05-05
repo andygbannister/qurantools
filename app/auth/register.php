@@ -51,13 +51,13 @@ if (isset($_POST['REGISTER_BUTTON']))
     try
     {
         $insert_data = [
-            'EMAIL'       => $_POST['EMAIL'],
-            'PASSWORD'    => $_POST['PASSWORD'],
-            'FIRST_NAME'  => $_POST['FIRST_NAME'],
-            'LAST_NAME'   => $_POST['LAST_NAME'],
+            'EMAIL'      => $_POST['EMAIL'],
+            'PASSWORD'   => $_POST['PASSWORD'],
+            'FIRST_NAME' => $_POST['FIRST_NAME'],
+            'LAST_NAME'  => $_POST['LAST_NAME'],
         ];
 
-        $new_user  = register_consumer_user($insert_data);
+        $new_user = register_consumer_user($insert_data);
 
         if (!$new_user)
         {
@@ -167,7 +167,7 @@ switch ($page_mode)
         echo '    <p class="message in-between">' . get_gdpr_registration_inner_html(
             $config['show_gdpr'],
             $config['gdpr_base_text'],
-            $config['privacy_policy_url'],
+            get_privacy_policy_url(),
             $config['cookie_policy_url']
         ) . '</p>';
 
@@ -177,55 +177,55 @@ switch ($page_mode)
 
         echo '  </form>';
 ?>
-        <script>
-            $(function() {
-                Tipped.create('.yellow-tooltip', {
-                    position: 'bottommiddle',
-                    maxWidth: 420,
-                    skin: 'lightyellow',
-                    showDelay: 1000
-                });
-            });
+<script>
+    $(function() {
+        Tipped.create('.yellow-tooltip', {
+            position: 'bottommiddle',
+            maxWidth: 420,
+            skin: 'lightyellow',
+            showDelay: 1000
+        });
+    });
 
-            minimum_name_length
-                = <?php echo $config['minimum_full_name_length']; ?>
+    minimum_name_length
+        = <?php echo $config['minimum_full_name_length']; ?>
 
-            $("form#register").validate({
-                errorClass: "error-message",
-                rules: {
-                    PASSWORD: {
-                        required: true,
-                        minlength: 8
-                    },
-                    PASSWORD_AGAIN: {
-                        equalTo: "#PASSWORD"
-                    },
-                    EMAIL: {
-                        required: true,
-                        email: true
-                    }
+        $("form#register").validate({
+            errorClass: "error-message",
+            rules: {
+                PASSWORD: {
+                    required: true,
+                    minlength: 8
                 },
-                groups: {
-                    name: "FIRST_NAME LAST_NAME"
+                PASSWORD_AGAIN: {
+                    equalTo: "#PASSWORD"
                 },
-                errorPlacement: qt.nameErrorPlacement
-            });
+                EMAIL: {
+                    required: true,
+                    email: true
+                }
+            },
+            groups: {
+                name: "FIRST_NAME LAST_NAME"
+            },
+            errorPlacement: qt.nameErrorPlacement
+        });
 
-            jQuery.validator.addMethod(
-                "name-component",
-                function(value, element) {
-                    return (
-                        $("#FIRST_NAME")
-                        .val()
-                        .trim().length +
-                        $("#LAST_NAME")
-                        .val()
-                        .trim().length >= minimum_name_length
-                    );
-                },
-                'Your combined first and last name must be at least ' + minimum_name_length + ' characters long'
+    jQuery.validator.addMethod(
+        "name-component",
+        function(value, element) {
+            return (
+                $("#FIRST_NAME")
+                .val()
+                .trim().length +
+                $("#LAST_NAME")
+                .val()
+                .trim().length >= minimum_name_length
             );
-        </script>
+        },
+        'Your combined first and last name must be at least ' + minimum_name_length + ' characters long'
+    );
+</script>
 
 <?php break;
 
