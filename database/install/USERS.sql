@@ -35,6 +35,7 @@ CREATE TABLE `USERS` (
   `Last Login Date` date DEFAULT NULL,
   `Last Login Time` time DEFAULT NULL,
   `Last Login Timestamp` timestamp NULL DEFAULT NULL,
+  `Is Blocked` tinyint,
   `Login Count` int DEFAULT 0,
   `Fails Count` int DEFAULT 0,
   `Fail Time` int DEFAULT NULL,

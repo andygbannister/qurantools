@@ -385,85 +385,87 @@ else
 
         // TODO: replace with an archive feature
 
-        // // is this a delete request?
-        // if (isset($_GET["DELUSER"]))
-        // {
-        //     if ($_GET["DELUSER"] > 0)
-        //     {
-        //         // look up user
-        //         $del_result = db_query("SELECT * FROM `USERS` WHERE `User ID`=".db_quote($_GET["DELUSER"]));
+        // is this a delete request?
+        if (isset($_GET["DELETE_USER"]))
+        {
+            if ($_GET["DELETE_USER"] > 0)
+            {
+                // look up user
+                $del_result = db_query("SELECT * FROM `USERS` WHERE `User ID`=" . db_quote($_GET["DELETE_USER"]));
 
-        //         if (db_rowcount($del_result) > 0)
-        //         {
-        //             // load the row
-        //             $DROW = db_return_row($del_result);
+                if (db_rowcount($del_result) > 0)
+                {
+                    // load the row
+                    $DROW = db_return_row($del_result);
 
-        //             // create the delete user panel
-        //             echo "<div id='DELETE_USER_PANEL' class='dialog-box'>";
+                    // create the delete user panel
+                    echo "<div id='DELETE_USER_PANEL' class='dialog-box'>";
 
-        //             echo "<h3>Delete User</h3>";
+                    echo "<h3>Delete User</h3>";
 
-        //             echo "<div class='form'>";
+                    echo "<div class='form'>";
 
-        //             echo "<p class='bigger-message'>About to delete the user:<br><b>".$DROW["Email Address"]."</b></p>";
+                    echo "<p class='bigger-message'>About to delete the user:<br><b>" . $DROW["Email Address"] . "</b>. This will also remove all their search history, bookmarks and login records. It cannot be undone. You could consider blocking them instead.</p>";
 
-        //             echo "<a href='user_management.php?DELCONFIRM=".$_GET["DELUSER"]."&$timeGETURLpass&SORT=".$_GET["SORT"]."'>";
-        //             echo "<button name='DELETE_USER' type='submit' value='1'>PROCEED AND DELETE</button>";
-        //             echo "</a>";
+                    echo "<a href='user_management.php?DELETE_USER_CONFIRM=" . $_GET["DELETE_USER"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "'>";
+                    echo "<button name='DELETE_USER' type='submit' value='1'>PROCEED AND DELETE</button>";
+                    echo "</a>";
 
-        //             echo "<a href='user_management.php?PAGE=$CURRENT_PAGE&$timeGETURLpass&SORT=".$_GET["SORT"]."'>";
-        //             echo "<button name=BOOKMARK_RENAME_CANCEL class='cancel-button' type=submit value='Cancel'>CANCEL</button>";
-        //             echo "</a>";
+                    echo "<a href='user_management.php?PAGE=$CURRENT_PAGE&$timeGETURLpass&SORT=" . $_GET["SORT"] . "'>";
+                    echo "<button name=BOOKMARK_RENAME_CANCEL class='cancel-button' type=submit value='Cancel'>CANCEL</button>";
+                    echo "</a>";
 
-        //             echo "</div>";
+                    echo "</div>";
 
-        //             echo "</div>";
-        //         }
-        //         else
-        //         {
-        //             $code_message = "User ID can't be found to delete!";
-        //         }
-        //     }
-        // }
+                    echo "</div>";
+                }
+                else
+                {
+                    $code_message = "User ID can't be found to delete!";
+                }
+            }
+        }
 
         // TODO: replace with an archive feature
         // delete confirmed
-        // if (isset($_GET["DELCONFIRM"]))
-        // {
-        //     if ($_GET["DELCONFIRM"] > 0)
-        //     {
-        //         // TODO: Create a delete user function that deletes a user and its
-        //         // dependent records
+        if (isset($_GET["DELETE_USER_CONFIRM"]) && $_GET["DELETE_USER_CONFIRM"] > 0)
+        {
+            // TODO: Create a delete user function that deletes a user and its
+            // dependent records
 
-        //         // look up user
-        //         $del_result = db_query("SELECT * FROM `USERS` WHERE `User ID`=".db_quote($_GET["DELCONFIRM"]));
+            // look up user
+            $user = get_user_by_id($_GET["DELETE_USER_CONFIRM"]);
 
-        //         if (db_rowcount($del_result) > 0)
-        //         {
-        //             // load the row
-        //             $DROW = db_return_row($del_result);
+            if ($user)
+            {
+                $delete_message = "User '" . htmlentities($user["User Name"]) . "' (" . $user["Email Address"] . ") has been deleted";
 
-        //             $delete_message = "User '".htmlentities($DROW["User Name"])."' (".$DROW["Email Address"].") has been deleted";
+                // delete history
+                db_query("DELETE FROM `HISTORY` WHERE `User ID`=" . db_quote($_GET["DELETE_USER_CONFIRM"]));
 
-        //             // delete user
-        //             db_query("DELETE FROM `USERS` WHERE `User ID`=".db_quote($_GET["DELCONFIRM"]));
+                // delete bookmarks
+                db_query("DELETE FROM `BOOKMARKS` WHERE `User ID`=" . db_quote($_GET["DELETE_USER_CONFIRM"]));
 
-        //             // delete history
-        //             db_query("DELETE FROM `HISTORY` WHERE `User ID`=".db_quote($_GET["DELCONFIRM"]));
+                // delete bookmarks
+                db_query("DELETE FROM `TAGS` WHERE `User ID`=" . db_quote($_GET["DELETE_USER_CONFIRM"]));
 
-        //             // delete bookmarks
-        //             db_query("DELETE FROM `BOOKMARKS` WHERE `User ID`=".db_quote($_GET["DELCONFIRM"]));
-        //         }
-        //     }
-        // }
+                // delete login logs
+                db_query("DELETE FROM `LOGIN-LOGS` WHERE `User ID`=" . db_quote($_GET["DELETE_USER_CONFIRM"]));
+
+                // and finally delete the user
+                db_query("DELETE FROM `USERS` WHERE `User ID`=" . db_quote($_GET["DELETE_USER_CONFIRM"]));
+
+                $message_class = "message-success";
+            }
+        }
 
         // is this a reset password request?
-        if (isset($_GET["RESETUSER"]))
+        if (isset($_GET["RESET_PASSWORD"]))
         {
-            if ($_GET["RESETUSER"] > 0)
+            if ($_GET["RESET_PASSWORD"] > 0)
             {
                 // look up user
-                $del_result = db_query("SELECT * FROM `USERS` WHERE `User ID`=" . db_quote($_GET["RESETUSER"]));
+                $del_result = db_query("SELECT * FROM `USERS` WHERE `User ID`=" . db_quote($_GET["RESET_PASSWORD"]));
 
                 if (db_rowcount($del_result) > 0)
                 {
@@ -479,7 +481,7 @@ else
 
                     echo "<p class='bigger-message'>Are you sure you wish to reset the password for <b>" . $DROW["Email Address"] . "</b>? They will be asked to reset their password when they next login.</p>";
 
-                    echo "<a href='user_management.php?RESETCONFIRM=" . $_GET["RESETUSER"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "'>";
+                    echo "<a href='user_management.php?RESET_PASSWORD_CONFIRM=" . $_GET["RESET_PASSWORD"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "'>";
                     echo "<button name=BOOKMARK_SAVE type=submit value=1>PROCEED</button>";
                     echo "</a>";
 
@@ -499,12 +501,12 @@ else
         }
 
         // reset confirmed
-        if (isset($_GET["RESETCONFIRM"]))
+        if (isset($_GET["RESET_PASSWORD_CONFIRM"]))
         {
-            if ($_GET["RESETCONFIRM"] > 0)
+            if ($_GET["RESET_PASSWORD_CONFIRM"] > 0)
             {
                 // look up user
-                $del_result = db_query("SELECT * FROM `USERS` WHERE `User ID`=" . db_quote($_GET["RESETCONFIRM"]));
+                $del_result = db_query("SELECT * FROM `USERS` WHERE `User ID`=" . db_quote($_GET["RESET_PASSWORD_CONFIRM"]));
 
                 if (db_rowcount($del_result) > 0)
                 {
@@ -512,7 +514,7 @@ else
                     $DROW = db_return_row($del_result);
 
                     // wipe their password hash
-                    if (db_query("UPDATE `USERS` SET `Password Hash`='" . PASSWORD_RESET_TEXT . "' WHERE `User ID`=" . db_quote($_GET["RESETCONFIRM"])))
+                    if (db_query("UPDATE `USERS` SET `Password Hash`='" . PASSWORD_RESET_TEXT . "' WHERE `User ID`=" . db_quote($_GET["RESET_PASSWORD_CONFIRM"])))
                     {
                         $code_message = "User " . htmlentities($DROW["User Name"]) . " (" . $DROW["Email Address"] . ") has had their password reset.";
 
@@ -524,6 +526,79 @@ else
 
                         $message_class = "message-warning";
                     };
+                }
+            }
+        }
+
+        // is this a block/unblock user request?
+        if (isset($_GET["BLOCK_USER"]) && $_GET["USER"] > 0)
+        {
+            $block_mode = $_GET["BLOCK_USER"];
+
+            if (BLOCK_MODE_BLOCK == $block_mode || BLOCK_MODE_UNBLOCK == $block_mode)
+            {
+                // look up user
+                $user = get_user_by_id($_GET["USER"]);
+
+                if ($user)
+                {
+                    // create the reset user password panel
+                    echo "<div id='BLOCK_USER_PANEL' class='dialog-box'>";
+
+                    echo "<h3>" . (BLOCK_MODE_BLOCK == $block_mode ? "Block" : "Unblock") . " User</h3>";
+
+                    echo "<div class='form'>";
+
+                    if (BLOCK_MODE_BLOCK == $block_mode)
+                    {
+                        echo "<p class='bigger-message'>Are you sure you wish to block <b>" . $user['User Name'] . "</b> (" . $user["Email Address"] . ")? They will not be able to login until they are unblocked by an admin.</p>";;
+                    }
+                    else
+                    {
+                        echo "<p class='bigger-message'>Are you sure you wish to unblock <b>" . $user['User Name'] . "</b> (" . $user["Email Address"] . ")? They will be able to login into Qur`an Tools.</p>";;
+                    }
+
+                    echo "<a href='user_management.php?BLOCK_USER_CONFIRM=" . $block_mode . "&USER=" . $_GET["USER"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "'>";
+                    echo "<button type=submit value=1>Proceed</button>";
+                    echo "</a>";
+
+                    echo "<a href='user_management.php?PAGE=$CURRENT_PAGE&$timeGETURLpass&SORT=" . $_GET["SORT"] . "'>";
+                    echo "<button class='cancel-button' type=submit value='Cancel'>CANCEL</button>";
+                    echo "</a>";
+
+                    echo "</div>";
+
+                    echo "</div>";
+                }
+                else
+                {
+                    $code_message = "User ID can't be found";
+                }
+            }
+        }
+
+        // block confirmed
+        if (isset($_GET["BLOCK_USER_CONFIRM"]) && $_GET["USER"] > 0)
+        {
+            $block_mode = $_GET["BLOCK_USER_CONFIRM"];
+
+            if (BLOCK_MODE_BLOCK == $block_mode || BLOCK_MODE_UNBLOCK == $block_mode)
+            {
+                // look up user
+                $user = get_user_by_id($_GET["USER"]);
+
+                $is_blocked = update_user_block($user, $block_mode)['Is Blocked'];
+
+                $code_message = "User " . htmlentities($user["User Name"]) . " (" . $user["Email Address"] . ") is" . ($is_blocked ? ' ' : ' not ') . "blocked from Qur`an Tools.";
+
+                if ($is_blocked && BLOCK_MODE_BLOCK == $block_mode || (!$is_blocked && BLOCK_MODE_UNBLOCK == $block_mode))
+                {
+                    // we got the result we expected
+                    $message_class = "message-success";
+                }
+                else
+                {
+                    $message_class = 'message-warning';
                 }
             }
         }
@@ -672,6 +747,11 @@ else
                 echo " <img src='..\images\padlock-locked-red.png' class='qt-icon pull-right' title='User&lsquo;s password is locked'>";
             }
 
+            if ($ROW["Is Blocked"])
+            {
+                echo "<a><img src='./images/noun-no-entry-1029298-blocked-red.png' title='User is blocked and cannot login' class='qt-icon pull-right'></a>";
+            }
+
             echo "</td>";
 
             echo "<td class='email-address left-align'><a href='mailto:" . $ROW["Email Address"] . "' class=linky>" . htmlspecialchars($ROW["Email Address"]) . "</a></td>";
@@ -735,14 +815,15 @@ else
                 echo "<img src='/images/edit.png' class='qt-icon' title='Edit the user'>";
                 echo "</a>";
 
-                // these actions not available to the currently logged in user
+                // these actions not available for the currently logged in user
+                // to do to themselves
                 if ($ROW["User ID"] != $_SESSION['UID'])
                 {
                     // delete icon
                     // TODO: create an archive function instead
-                    // echo "<a id='delete-user-".$ROW["User ID"]."' href='user_management.php?DELUSER=".$ROW["User ID"]."&$timeGETURLpass&SORT=".$_GET["SORT"]."'>";
-                    // echo "<img src='/images/delete.png' class='qt-icon' title='Delete this user'>";
-                    // echo "</a>";
+                    echo "<a id='delete-user-" . $ROW["User ID"] . "' href='user_management.php?DELETE_USER=" . $ROW["User ID"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "'>";
+                    echo "<img src='/images/delete.png' class='qt-icon' title='Delete this user'>";
+                    echo "</a>";
 
                     echo "<a href='user_management.php?EDIT_USER_PASSWORD=" . $ROW["User ID"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "' id='edit-user-password-" . $ROW["User ID"] . "'>";
                     echo "<img src='/images/edit_password.png' class='qt-icon' title='Change password for this user'>";
@@ -750,13 +831,22 @@ else
 
                     if ($ROW["Password Hash"] != PASSWORD_RESET_TEXT)
                     {
-                        echo "<a href='user_management.php?RESETUSER=" . $ROW["User ID"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "' id='reset-user-password-" . $ROW["User ID"] . "' class='linky-light'>";
+                        echo "<a href='user_management.php?RESET_PASSWORD=" . $ROW["User ID"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "' id='reset-user-password-" . $ROW["User ID"] . "' class='linky-light'>";
                         echo "<img src='/images/padlock.png' class='qt-icon' title='Reset the password for this user'>";
                         echo "</a>";
                     }
                     else
                     {
                         echo "<img src='/images/padlock_faint.png' class='qt-icon' title='User&lsquo;s password is locked'>";
+                    }
+
+                    if ($ROW["Is Blocked"])
+                    {
+                        echo "<a href='user_management.php?BLOCK_USER=unblock&USER=" . $ROW["User ID"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "' id='unblock-user-" . $ROW["User ID"] . "'  class='linky-light'><img src='./images/noun-no-entry-1029298-block-faint.png' title='Unblock user' class='qt-icon'></a>";
+                    }
+                    else
+                    {
+                        echo "<a href='user_management.php?BLOCK_USER=block&USER=" . $ROW["User ID"] . "&$timeGETURLpass&SORT=" . $_GET["SORT"] . "' id='block-user-" . $ROW["User ID"] . "'  class='linky-light'><img src='./images/noun-no-entry-1029298-block.png' title='Block user' class='qt-icon'></a>";
                     }
                 }
                 else

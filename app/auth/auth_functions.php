@@ -14,9 +14,11 @@ define('ATTEMPTED_LOGIN_TYPE_USER_PASSWORD', 'user_password');
 define('ATTEMPTED_LOGIN_TYPE_FRESH_FACE', 'fresh_face');
 
 // auth flags for the $_SESSION variable
+define('AUTH_REDIRECT_LINK', 'auth_redirect_link');
 define('AUTH_CONSUMER_ERROR', 'auth_consumer_error');
 define('AUTH_PASSWORD_RESET', 'auth_password_reset');
 define('AUTH_ACCOUNT_LOCKED', 'auth_account_locked');
+define('AUTH_ACCOUNT_BLOCKED', 'auth_account_blocked');
 define('AUTH_STOP_PROCESSING', 'auth_stop_processing');
 
 /**
@@ -69,7 +71,7 @@ function get_logged_in_user(): ?array
  */
 function set_redirect_link()
 {
-    $_SESSION['auth_redirect_link'] = (isset($_SERVER['HTTPS']) ? 'https' : 'http') .
+    $_SESSION[AUTH_REDIRECT_LINK] = (isset($_SERVER['HTTPS']) ? 'https' : 'http') .
         "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 }
 
@@ -239,7 +241,9 @@ function attempt_consumer_login(): void
  * @return boolean         - could we validate this user by username/password?
  *
  * In addition to checking the username/password match, this function also keeps
- * track of failed attempts to log-in and password resets.
+ * track of failed attempts to log-in, password resets and blocks
+ * 
+ * TODO: refactor function so it doesn't do so much stuff
  */
 function validate_email_password($user, $email, $password)
 {
@@ -262,6 +266,16 @@ function validate_email_password($user, $email, $password)
             'Your password has been reset by an administrator and you must choose a new one.'
         );
         set_auth_flag(AUTH_PASSWORD_RESET, true);
+        return false;
+    }
+
+    if (is_user_blocked($user))
+    {
+        set_auth_flag(
+            AUTH_CONSUMER_ERROR,
+            'You have been blocked from using Qur`an Tools.'
+        );
+        set_auth_flag(AUTH_ACCOUNT_BLOCKED, true);
         return false;
     }
 
@@ -348,11 +362,11 @@ function log_user_in(array $user): void
 
     // unset any session variables that may have been used during login
     unset(
-        $_SESSION['auth_redirect_link'],
-        $_SESSION['auth_password_reset'],
-        $_SESSION['auth_account_locked'],
-        $_SESSION['auth_consumer_error'],
-        $_SESSION['auth_stop_processing']
+        $_SESSION[AUTH_REDIRECT_LINK],
+        $_SESSION[AUTH_PASSWORD_RESET],
+        $_SESSION[AUTH_ACCOUNT_LOCKED],
+        $_SESSION[AUTH_CONSUMER_ERROR],
+        $_SESSION[AUTH_STOP_PROCESSING]
     );
 
     // TODO: refactor these into a new function
@@ -404,8 +418,8 @@ function log_user_out(): void
  */
 function is_auth_stop_processing(): bool
 {
-    $result = isset($_SESSION['auth_stop_processing']) &&
-        $_SESSION['auth_stop_processing'];
+    $result = isset($_SESSION[AUTH_STOP_PROCESSING]) &&
+        $_SESSION[AUTH_STOP_PROCESSING];
 
     return $result;
 }

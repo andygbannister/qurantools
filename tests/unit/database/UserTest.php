@@ -393,8 +393,43 @@ class UserTest extends \Codeception\Test\Unit
         ];
 
         $this->expectExceptionMessage(
-            // $this->email.' has already been used.'
             'An account with that email address already exists.'
+        );
+
+        register_consumer_user($insert_data);
+    }
+
+    public function testRegister_consumer_userThrowsIfEmailBogus()
+    {
+        $this->email = 'bogus';
+
+        $insert_data = [
+            'EMAIL'      => $this->email,
+            'PASSWORD'   => $this->password,
+            'FIRST_NAME' => $this->first_name,
+            'LAST_NAME'  => $this->last_name,
+        ];
+
+        $this->expectExceptionMessage(
+            'Invalid email address.'
+        );
+
+        register_consumer_user($insert_data);
+    }
+
+    public function testRegister_consumer_userThrowsIfContainsBadEmailCharacters()
+    {
+        $this->email = 'bogus<b></b>@example.com';
+
+        $insert_data = [
+            'EMAIL'      => $this->email,
+            'PASSWORD'   => $this->password,
+            'FIRST_NAME' => $this->first_name,
+            'LAST_NAME'  => $this->last_name,
+        ];
+
+        $this->expectExceptionMessage(
+            'Invalid email address.'
         );
 
         register_consumer_user($insert_data);
@@ -561,6 +596,81 @@ class UserTest extends \Codeception\Test\Unit
         $this->user = $this->tester->createUser($this->tester);
 
         $this->assertFalse(is_user_locked($this->user));
+    }
+
+    // is_user_blocked
+    public function testIs_user_blockedReturnsTrueForBlockedUser()
+    {
+        $this->user = $this->tester->createUser($this->tester, [
+            'Is Blocked' => true
+        ]);
+
+        $this->assertTrue(is_user_blocked($this->user));
+    }
+
+    public function testIs_user_blockedReturnsFalseForUnblockedUser()
+    {
+        $this->user = $this->tester->createUser($this->tester);
+
+        $this->assertFalse(is_user_blocked($this->user));
+    }
+
+    // update_user_block
+    public function testUpdate_user_blockThrowsIfNoUser()
+    {
+        $this->user = null;
+        $block_mode = BLOCK_MODE_BLOCK;
+
+        $this->expectExceptionMessage('Argument 1 passed to update_user_block() must be of the type array, null given');
+
+        update_user_block($this->user, $block_mode);
+    }
+
+    public function testUpdate_user_blockThrowsIfNoBlockMode()
+    {
+        $this->user = $this->tester->createUser($this->tester);
+        $block_mode = null;
+
+        $this->expectExceptionMessage('Argument 2 passed to update_user_block() must be of the type string, null given');
+
+        update_user_block($this->user, $block_mode);
+    }
+
+    public function testUpdate_user_blockThrowsIfUnknownBlockMode()
+    {
+        $this->user = $this->tester->createUser($this->tester);
+        $block_mode = 'zoobie wob';
+
+        $this->expectExceptionMessage('Unknown $block_mode (' . $block_mode . ') for update_user_block()');
+
+        update_user_block($this->user, $block_mode);
+    }
+
+    public function testUpdate_user_blockReturnsTrueWhenBlocking()
+    {
+        $this->user = $this->tester->createUser($this->tester);
+
+        $block_mode = BLOCK_MODE_BLOCK;
+
+        $this->assertEquals(1, update_user_block($this->user, $block_mode)['Is Blocked']);
+    }
+
+    public function testUpdate_user_blockReturnsTrueWhenUnblocking()
+    {
+        $this->user = $this->tester->createUser($this->tester);
+
+        $block_mode = BLOCK_MODE_UNBLOCK;
+
+        $this->assertEquals(0, update_user_block($this->user, $block_mode)['Is Blocked']);
+    }
+
+    public function testUpdate_user_blockReturnsNullWhenItFails()
+    {
+        $this->user = $this->tester->createUser($this->tester);
+
+        $block_mode = BLOCK_MODE_BLOCK;
+
+        $this->assertNull(update_user_block(['User ID' => -100], $block_mode));
     }
 
     // increment_fail_count_and_time

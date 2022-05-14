@@ -351,8 +351,7 @@ include 'gtm_body.php';
                             "' ORDER BY UPPER(`Name`)"
                     )
                 ) > 0
-            )
-            {
+            ) {
                 echo "<li><a class='MenuLink' href='/bookmark_manager.php'>My Bookmarks</a></li>";
             }
 
@@ -382,12 +381,12 @@ include 'gtm_body.php';
 
         if ($helpPageLink != '')
         {
-            echo "<li><a id='user-guide-link' href='$helpPageLink' target='_blank'>Get Help on This Page <img src='/images/help-green.png' class='menu-icon'></a></li>";
+            echo "<li><a id='this-help-page-link' href='$helpPageLink' target='_blank'>Get Help on This Page <img src='/images/help-green.png' class='menu-icon'></a></li>";
         }
 
-        echo "<li><a id='user-guide-link' href='/help/welcome-to-quran-tools.php' target='_blank'>Getting Started</a></li>";
-        
-        echo "<li><a id='user-guide-link' href='/help/help-index.php' target='_blank'>Help Index</a></li>";
+        echo "<li><a id='getting-started-link' href='/help/welcome-to-quran-tools.php' target='_blank'>Getting Started</a></li>";
+
+        echo "<li><a id='help-index-link' href='/help/help-index.php' target='_blank'>Help Index</a></li>";
 
         echo "<li id='about-menu'><a href='#'>About</a>";
 
@@ -398,21 +397,33 @@ include 'gtm_body.php';
 
         echo '</li>'; // #about-menu
 
-        echo "<li id='legal-menu'><a href='#'>License</a>";
+        echo "<li id='legal-menu'><a href='#'>Legal</a>";
 
         echo '  <ul>';
-        echo "    <li id='privacy-policy'><a href='" .
+        echo "    <li><a id='license-link' href='" .
             QT_LICENSE_URL .
             "'>GNU Public License</a></li>";
-        echo "    <li id='cookie-policy'><a href='" .
+        echo "    <li ><a id='terms-link' href='" .
             QT_TERMS_URL .
             "'>Terms of Use</a></li>";
+
+        if (!empty(get_privacy_policy_url()))
+        {
+            echo "    <li><a id='privacy-policy-link' href='" . get_privacy_policy_url() . "'>Privacy Policy</a></li>";
+        }
         echo '  </ul>';
         echo "  <span id='floatarrow'>▶︎</span>";
 
         echo '</li>'; // #legal-menu
 
-        echo '</ul>';
+        // QT_ADMIN_EMAIL should always be defined, as it is set in config.php
+        if (defined('QT_ADMIN_EMAIL') && show_contact_us_link())
+        {
+            // TODO: replace with a proper form
+            echo '    <li><a id="contact-us-link" href="mailto:' . QT_ADMIN_EMAIL . '">Contact Us: ' . QT_ADMIN_EMAIL . '</a></li>';
+        }
+
+        echo '  </ul>';
 
         echo '</li>'; // #help-menu
 

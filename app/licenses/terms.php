@@ -52,13 +52,8 @@ require_once '../library/functions.php';
             </section>
 
         </div>
-
-        <?php
-
-include "library/footer.php";
-
-?>
-
+        <?php include "library/footer.php"; ?>
+    </main>
 </body>
 
 </html>

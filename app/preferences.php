@@ -41,7 +41,7 @@ require_once 'auth/auth.php';
             }
         }
 
-        // have they changed their name?
+        // is the user trying to change their name?
 
         if (isset($_POST['NEW_FIRST_NAME']) || isset($_POST['NEW_LAST_NAME']))
         {
@@ -61,6 +61,26 @@ require_once 'auth/auth.php';
                 $columns['First Name'] = $_POST['NEW_FIRST_NAME'];
                 $columns['Last Name']  = $_POST['NEW_LAST_NAME'];
                 $data_to_update        = 'Name';
+            }
+        }
+
+        // is the user trying to change their email address?
+
+        if (isset($_POST['NEW_EMAIL']))
+        {
+            $new_email = filter_var(trim($_POST['NEW_EMAIL']), FILTER_SANITIZE_EMAIL);
+
+            // ensure valid email address that has not been used before
+            if (
+                !filter_var($new_email, FILTER_VALIDATE_EMAIL) || get_user_by_email($new_email)
+            ) {
+                $message       = 'You cannot change you email address to ' . $new_email;
+                $message_class = 'message-warning';
+            }
+            else
+            {
+                $columns['Email Address'] = $new_email;
+                $data_to_update           = 'Email Address';
             }
         }
 
@@ -175,9 +195,31 @@ require_once 'auth/auth.php';
                 "'"
         );
 
+        // =========== NEW EMAIL PANEL ================================== //
+
+        echo "<div id='EMAIL_PANEL' class='dialog-box' style='display:none;'>";
+
+        echo '<h3>Change Your Email</h3>';
+
+        echo "<form id='new-email-form' class='form' action='preferences.php' method='POST'>";
+
+        echo "<p class='bigger-message'>If you wish to change your email, you may do so by editing it below.</p>";
+
+        echo "<input id='NEW_EMAIL' type=text NAME='NEW_EMAIL' size=42 maxlength=100 autocomplete='off' placeholder='Email address' autofocus VALUE='" .
+            htmlspecialchars($logged_in_user['Email Address']) .
+            "'>";
+
+        echo "<button type='SUBMIT' name='DO_EMAIL' value='OK'>SAVE CHANGES</button>";
+
+        echo "<button type='button' id='cancel-email-change' class='cancel-button' name='CANCEL' onClick=\"$('#EMAIL_PANEL').toggle();\">Cancel</button>";
+
+        echo '</form>';
+
+        echo '</div>';
+
         // ==============================================================================
 
-        // =========== NEW NAME PANEL ==================================
+        // =========== NEW NAME PANEL ================================== //
 
         echo "<div id='NAME_PANEL' class='dialog-box' style='display:none;'>";
 
@@ -245,15 +287,18 @@ require_once 'auth/auth.php';
           <th colspan='3'>My Account</th>
       </tr>";
 
-        echo "<tr>
-        <td>Email</td>";
+        // Email Address
+        echo '<tr>
+                <td>Email</td>
+                <td>' .
+                  htmlspecialchars($logged_in_user['Email Address']) .
+               '</td>';
+        echo '  <td>
+                    <input id="change-email" title="Change email" type="button" class="preferences-button" value="Change Email" onClick="$(\'#EMAIL_PANEL\').toggle();">
+                </td>
+             </tr>';
 
-        echo "  <td colspan='2'>" .
-            htmlspecialchars($logged_in_user['Email Address']) .
-            '</td>';
-
-        echo '</tr>';
-
+        // Name
         echo "<tr>
         <td>Name</td>";
         echo '  <td>' .
@@ -269,6 +314,7 @@ require_once 'auth/auth.php';
                     </td>
                 </tr>";
 
+        // Password
         echo "<tr>
                 <td>Password</td>
                 <td>**************</td>

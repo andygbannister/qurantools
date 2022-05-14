@@ -9,6 +9,8 @@
 class PreferencesCest extends QTPageCest
 {
     public $user;
+    public $email;
+    public $password = 'secret-codeword-123';
 
     public function _before($I, $scenario)
     {
@@ -17,13 +19,17 @@ class PreferencesCest extends QTPageCest
         parent::_before($I, $scenario);
     }
 
+    // this is a hack function because the tests use the dev database rather
+    // than a test database that would automatically be cleared after each test
     public function _after($I, $scenario)
     {
         $user_ids = [];
         $emails   = [];
 
+        // harvest possible IDs and emails from tests in order to delete them
         !empty($this->user) ? ($user_ids[] = $this->user['User ID']) : null;
-        !empty($this->email) ? ($emails[] = $this->email) : null;
+        !empty($this->email) ? ($emails[]  = $this->email) : null;
+        !empty($this->user) ? ($emails[]   = $this->user['Email Address']) : null;
 
         $I->clearLoginLogs($I, ['user_ids' => $user_ids, 'emails' => $emails]);
 
@@ -54,19 +60,77 @@ class PreferencesCest extends QTPageCest
         );
     }
 
-    public function consumerUserCannotUpdateEmail(
+    public function userCanUpdateEmailWithValidEmailAddress(
         AcceptancePhpbrowserTester $I,
         $scenario
     ) {
-        $I->loginAndVisitPageOfInterest(
-            $I,
-            $scenario,
-            $this->page_of_interest,
-            $this->access_level,
-            ['Email Address' => $this->email]
-        );
+        $old_email  = 'bob@example.com';
+        $new_email  = 'mary@example.com';
+        $this->user = $I->createUser($I, ['Email Address' => $old_email, 'Password' => $this->password]);
+        $I->loginToQT($I, ['Email Address' => $old_email, 'Password' => $this->password]);
 
-        $I->dontSeeElement('#change-email');
+        $I->amOnPage($this->page_of_interest);
+        $I->seeElement('#change-email');
+        $I->click('#change-email');
+        $I->fillField('NEW_EMAIL', $new_email);
+        $I->click('DO_EMAIL');
+
+        // do the test
+        $I->see('Email Address updated successfully');
+    }
+
+    public function userCannotUpdateEmailWithBogusAddress(
+        AcceptancePhpbrowserTester $I,
+        $scenario
+    ) {
+        $old_email  = 'bob@example.com';
+        $new_email  = 'goofball';
+        $this->user = $I->createUser($I, ['Email Address' => $old_email, 'Password' => $this->password]);
+        $I->loginToQT($I, ['Email Address' => $old_email, 'Password' => $this->password]);
+
+        $I->amOnPage($this->page_of_interest);
+        $I->seeElement('#change-email');
+        $I->click('#change-email');
+        $I->fillField('NEW_EMAIL', $new_email);
+        $I->click('DO_EMAIL');
+
+        $I->see('You cannot change you email address to ' . $new_email);
+        // Ensure the database has not been changed
+        $I->dontSeeInDatabase('USERS', ['Email Address' => $new_email]);
+    }
+
+    public function userCannotUpdateEmailWithDuplicateAddress(
+        AcceptancePhpbrowserTester $I,
+        $scenario
+    ) {
+        $existing_email = 'mary@example.com';
+
+        $old_email = 'bob@example.com';
+        $new_email = $existing_email;
+
+        $existing_user = $I->createUser($I, ['Email Address' => $existing_email]);
+
+        $this->user = $I->createUser($I, ['Email Address' => $old_email, 'Password' => $this->password]);
+
+        $I->loginToQT($I, ['Email Address' => $old_email, 'Password' => $this->password]);
+        $I->amOnPage($this->page_of_interest);
+
+        $I->seeElement('#change-email');
+
+        $I->click('#change-email');
+
+        $I->fillField('NEW_EMAIL', $new_email);
+
+        $I->click('DO_EMAIL');
+
+        // do the tests
+        $I->see('You cannot change you email address to ' . $new_email);
+
+        // Ensure the database has not been changed
+        $I->seeInDatabase('USERS', ['User ID' => $this->user['User ID'], 'Email Address' => $old_email]);
+        $I->seeInDatabase('USERS', ['User ID' => $existing_user['User ID'], 'Email Address' => $existing_email]);
+
+        $this->email = $existing_email; // ensure mary is deleted from DB after test
     }
 
     public function consumerUserCannotUpdateFirstAndLastNamesToBeTooShort(

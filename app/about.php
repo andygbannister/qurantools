@@ -77,6 +77,10 @@ require_once 'library/functions.php';
                     system (see Neal Robinson, <i>Discovering the Qur’an: A Contemporary Approach to a Veiled Text</i>
                     (London: SCM, 2003) pp60-96 esp. p77).</p>
 
+                <p>
+                    Icons: No Entry by mikicon from NounProject.com
+                </p>
+
             </section>
 
         </div>

@@ -19,6 +19,15 @@ class MenuWDCest
         $this->page_of_interest = $I->getApplicationPage('home');
     }
 
+    // public function _after()
+    public function _after($I, $scenario)
+    {
+        // remove login artifacts
+        $I->clearLoginLogs($I);
+        
+        db_query("DELETE FROM `USERS` WHERE `Email Address` IN ('superuser@example.com','user@example.com','admin@example.com')");
+    }
+
     public function notLoggedInUserSeesCorrectMenuItems(AcceptanceWebdriverTester $I, $scenario)
     {
         $I->redirectToLoginFor($I, $this->page_of_interest);
@@ -27,41 +36,50 @@ class MenuWDCest
         $I->seeElement('a', ['id' => 'home-page-link']);
         // help menu
         $I->moveMouseOver(['id' => 'help-menu']);
-        $I->seeElement('a', ['id' => 'user-guide-link']);
-        $I->moveMouseOver(['id' => 'about-menu']);
-        $I->seeElement('a', ['id' => 'about-link']);
+        // $I->waitForElement('a#this-help-page-link');
+        $I->waitForElement('a#getting-started-link', 2);
+        $I->waitForElement('a#help-index-link', 2);
+        $I->waitForElement('li#about-menu', 2);
+        $I->waitForElement('li#legal-menu', 2);
+        $I->waitForElement('a#contact-us-link', 2);
 
-        // stuff I shouldn't see
-        $I->dontSeeElement('li', ['id' => 'browse-menu']);
+        // about menu
+        $I->moveMouseOver(['id' => 'about-menu']);
+        $I->waitForElement('a#about-link', 2);
+
+        // legal menu
+        $I->moveMouseOver(['id' => 'help-menu']);
+        $I->moveMouseOver(['id' => 'legal-menu']);
+        $I->waitForElement('a#license-link', 2);
+        $I->waitForElement('a#privacy-policy-link', 2);
+
+        // stuff a non-logged in should not see
         $I->dontSeeElement('li', ['id' => 'browse-menu']);
         $I->dontSeeElement('li', ['id' => 'admin-tools-menu']);
-        $I->dontSeeElement('a', ['id' => 'whats-new-link']);
-        $I->dontSeeElement('a', ['id' => 'blog-news-link']);
     }
 
     public function loggedInConsumerUserSeesCorrectMenuItems(AcceptanceWebdriverTester $I, $scenario)
     {
-        $scenario->skip('for some reason this test runs REAL slow, so I\'m canning it for now');
         $I->loginToQT($I);
-        // $I->redirectToLoginFor($I, $this->page_of_interest);
-
-        $I->see('Quick Tips');
 
         // home page
-        $I->seeElement('a', ['id' => 'home-page-link']);
-        // help menu
-        $I->moveMouseOver(['id' => 'help-menu']);
-        $I->seeElement('a', ['id' => 'user-guide-link']);
-        $I->seeElement('a', ['id' => 'training-videos-link']);
-        $I->seeElement('a', ['id' => 'contact-us-link']);
-        $I->moveMouseOver(['id' => 'about-menu']);
-        $I->seeElement('a', ['id' => 'about-link']);
-        $I->seeElement('a', ['id' => 'whats-new-link']);
-        $I->seeElement('a', ['id' => 'blog-news-link']);
+        $I->waitForElement('a#home-page-link');
 
-        // stuff I shouldn't see
-        $I->dontSeeElement('li', ['id' => 'browse-menu']);
-        $I->dontSeeElement('li', ['id' => 'browse-menu']);
+        // browse menu
+        $I->seeElement('li', ['id' => 'browse-menu']);
+
+        // stuff a consumer should not see
         $I->dontSeeElement('li', ['id' => 'admin-tools-menu']);
+    }
+
+    public function loggedInAdminUserSeesCorrectMenuItems(AcceptanceWebdriverTester $I, $scenario)
+    {
+        $I->loginToQTAsAdmin($I);
+
+        // home page
+        $I->waitForElement('a#home-page-link');
+
+        // admin menu
+        $I->waitForElement('li#admin-tools-menu');
     }
 }

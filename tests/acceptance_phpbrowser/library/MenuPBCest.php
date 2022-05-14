@@ -18,6 +18,7 @@ class MenuPBCest
 
     public function _before(AcceptancePhpbrowserTester $I)
     {
+        $this->page_of_interest = $I->getApplicationPage("about");
     }
 
     public function _after(AcceptancePhpbrowserTester $I)

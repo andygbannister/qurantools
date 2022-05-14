@@ -45,19 +45,22 @@ echo "    <main class='qt-site-content'>";
 
 include 'library/menu.php';
 
+// TODO: It would probably be a good idea to have some kind of verify function
+// that ensures users have given a real email address
+
 if (isset($_POST['REGISTER_BUTTON']))
 {
     // Register a consumer user
     try
     {
         $insert_data = [
-            'EMAIL'       => $_POST['EMAIL'],
-            'PASSWORD'    => $_POST['PASSWORD'],
-            'FIRST_NAME'  => $_POST['FIRST_NAME'],
-            'LAST_NAME'   => $_POST['LAST_NAME'],
+            'EMAIL'      => trim($_POST['EMAIL']),
+            'PASSWORD'   => trim($_POST['PASSWORD']),
+            'FIRST_NAME' => trim($_POST['FIRST_NAME']),
+            'LAST_NAME'  => trim($_POST['LAST_NAME']),
         ];
 
-        $new_user  = register_consumer_user($insert_data);
+        $new_user = register_consumer_user($insert_data);
 
         if (!$new_user)
         {
@@ -95,10 +98,7 @@ switch ($page_mode)
 
         echo '<p>Success! Your new account has been created.</p>';
 
-        if ($page_mode == PAGE_MODE_CONSUMER_SUCCESS)
-        {
-            echo '<p>We hope that you enjoy using Qur’an Tools!</p>';
-        }
+        echo '<p>We hope that you enjoy using Qur’an Tools!</p>';
 
         echo "<p><a href='../home.php'><button id='login-to-new-account'>Login to Your New Account</button></a></p>";
 
@@ -167,7 +167,7 @@ switch ($page_mode)
         echo '    <p class="message in-between">' . get_gdpr_registration_inner_html(
             $config['show_gdpr'],
             $config['gdpr_base_text'],
-            $config['privacy_policy_url'],
+            get_privacy_policy_url(),
             $config['cookie_policy_url']
         ) . '</p>';
 
@@ -177,55 +177,6 @@ switch ($page_mode)
 
         echo '  </form>';
 ?>
-        <script>
-            $(function() {
-                Tipped.create('.yellow-tooltip', {
-                    position: 'bottommiddle',
-                    maxWidth: 420,
-                    skin: 'lightyellow',
-                    showDelay: 1000
-                });
-            });
-
-            minimum_name_length
-                = <?php echo $config['minimum_full_name_length']; ?>
-
-            $("form#register").validate({
-                errorClass: "error-message",
-                rules: {
-                    PASSWORD: {
-                        required: true,
-                        minlength: 8
-                    },
-                    PASSWORD_AGAIN: {
-                        equalTo: "#PASSWORD"
-                    },
-                    EMAIL: {
-                        required: true,
-                        email: true
-                    }
-                },
-                groups: {
-                    name: "FIRST_NAME LAST_NAME"
-                },
-                errorPlacement: qt.nameErrorPlacement
-            });
-
-            jQuery.validator.addMethod(
-                "name-component",
-                function(value, element) {
-                    return (
-                        $("#FIRST_NAME")
-                        .val()
-                        .trim().length +
-                        $("#LAST_NAME")
-                        .val()
-                        .trim().length >= minimum_name_length
-                    );
-                },
-                'Your combined first and last name must be at least ' + minimum_name_length + ' characters long'
-            );
-        </script>
 
 <?php break;
 
@@ -236,6 +187,15 @@ switch ($page_mode)
 
 include 'library/footer.php';
 ?>
+<script>
+    $(document).ready(function() {
+        if (typeof qt == 'undefined') qt = {};
+
+        qt.minimum_name_length = <?php echo $config['minimum_full_name_length']; ?>
+
+    })
+</script>
+<script type='text/javascript' src='register.js'></script>
 
 </body>
 

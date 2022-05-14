@@ -22,8 +22,7 @@ function print_page_navigator(
     $pages_needed,
     $show_buttons,
     $url_link
-)
-{
+) {
     // catch rounding errors
     $pages_needed = intval($pages_needed);
 
@@ -136,8 +135,7 @@ function build_page_navigator(
     $show_buttons,
     $move_big_amount,
     $page_navi_location
-)
-{
+) {
     $pages_needed = intval($pages_needed);
 
     $page_item = [];
@@ -208,8 +206,7 @@ function build_page_navigator(
             $i = $current_page - 1 - 1 * ($current_page == $pages_needed);
             $i <= $current_page + 1 + 2 * ($current_page < 2);
             $i++
-        )
-        {
+        ) {
             if (($i > 2 || $i == $current_page) && $i <= $pages_needed)
             {
                 $page_item[] = $i;
@@ -235,8 +232,7 @@ function build_page_navigator(
             $i = $pages_needed - $numbers_shown_count + 1;
             $i <= $pages_needed;
             $i++
-        )
-        {
+        ) {
             if ($i > $current_page - $numbers_shown_count + 2)
             {
                 $page_item[] = $i;
@@ -359,8 +355,7 @@ function generate_random_code(
     $groups = 4,
     $group_length = 4,
     $characters = DIGITS_AND_UPPER_CASE_LETTERS
-)
-{
+) {
     $code = '';
 
     for ($i = 1; $i <= $groups; $i++)
@@ -391,8 +386,7 @@ function generate_reset_password_code(
     $groups = PASSWORD_RESET_GROUPS,
     $group_length = PASSWORD_RESET_GROUP_LENGTH,
     $characters = DIGITS_AND_ALL_LETTERS
-)
-{
+) {
     return generate_random_code($groups, $group_length, $characters);
 }
 
@@ -414,7 +408,7 @@ function intertextual_count($s, $v)
     );
 }
 
-// todo: This is a lousy way to check for mobile phones - it would be much 
+// todo: This is a lousy way to check for mobile phones - it would be much
 // better done with responsive media queries that are used (sparingly) in
 // other parts of the site. But isMobile() is used in quite a few places
 // in the app, so removing it would be a bit of work
@@ -871,8 +865,7 @@ function format_ip_ranges(string $ip_ranges_string = null, $options = ['max_line
             if (
                 $index < sizeof($ip_ranges) - 1 &&
                 $index != $options['max_lines'] - 1
-            )
-            {
+            ) {
                 $result .= '</br>';
             }
         }
@@ -973,7 +966,7 @@ function show_value_or_missing(?string $value, ?string $label = ''): string
 }
 
 /**
- * Concatenates first and last names
+ * Cleans, trims and concatenates first and last names
  *
  * Use: $full_name = generate_user_name('bob  ','builder  ')
  *
@@ -986,7 +979,10 @@ function show_value_or_missing(?string $value, ?string $label = ''): string
  */
 function generate_user_name(?string $first_name = '', ?string $last_name = ''): ?string
 {
-    $user_name = trim(join(' ', [trim($first_name), trim($last_name)]));
+    $first_name = htmlspecialchars(trim($first_name));
+    $last_name  = htmlspecialchars(trim($last_name));
+
+    $user_name = trim(join(' ', [$first_name, $last_name]));
 
     return empty($user_name) ? null : $user_name;
 }
@@ -1075,9 +1071,7 @@ function get_gdpr_registration_inner_html(
     string $gdpr_base_text = null,
     string $privacy_policy_url = null,
     string $cookie_policy_url = null
-
-): ?string
-{
+): ?string {
     if ($show_gdpr && $gdpr_base_text)
     {
         $text = $gdpr_base_text;
@@ -1227,7 +1221,28 @@ function branding_text(String $boilerplate = ''): ?string
         {
             $hosting_organisation = '<a href="' . $hosting_organisation_url . '">' . $hosting_organisation . '</a>';
         }
-        $output = $boilerplate . $hosting_organisation ;
+        $output = $boilerplate . $hosting_organisation;
     }
     return $output;
+}
+
+/**
+ * Should the contact us link be shown?
+ *
+ * Since the email address is not obfuscated, some users may not want an
+ * internet facing email address (especially if they don't have a great spam
+ * filer)
+ *
+ * Used on menu.php
+ */
+function show_contact_us_link(): bool
+{
+    global $config;
+
+    if (!isset($config['show_contact_us_link']))
+    {
+        return false;
+    }
+
+    return !empty(trim($config['show_contact_us_link']));
 }
