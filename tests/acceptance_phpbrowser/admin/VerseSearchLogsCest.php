@@ -19,7 +19,7 @@ class VerseSearchLogsCest extends QTPageCest
 
     public function _after($I, $scenario)
     {
-        $user_ids = [];
+        $user_ids                          = [];
         (!empty($this->user) ? $user_ids[] = $this->user['User ID'] : null);
 
         $I->clearLoginLogs($I, ['user_ids' => $user_ids]);
@@ -72,6 +72,8 @@ class VerseSearchLogsCest extends QTPageCest
         $I->loginAndVisitPageOfInterest($I, $scenario, $this->page_of_interest, $this->access_level);
 
         $I->see("Name not supplied", ['css' => 'tr#record-id-' . $search_log_id . ' td']);
+
+        codecept_debug($this->user);
     }
 
     public function headingHandlesEmptyUserNames(AcceptancePhpbrowserTester $I, $scenario)

@@ -19,6 +19,15 @@ class MenuWDCest
         $this->page_of_interest = $I->getApplicationPage('home');
     }
 
+    // public function _after()
+    public function _after($I, $scenario)
+    {
+        // remove login artifacts
+        $I->clearLoginLogs($I);
+        
+        db_query("DELETE FROM `USERS` WHERE `Email Address` IN ('superuser@example.com','user@example.com','admin@example.com')");
+    }
+
     public function notLoggedInUserSeesCorrectMenuItems(AcceptanceWebdriverTester $I, $scenario)
     {
         $I->redirectToLoginFor($I, $this->page_of_interest);

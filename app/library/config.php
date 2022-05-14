@@ -51,7 +51,7 @@ if (!defined('USER_DISPLAYABLE_EXCEPTION'))
     define('USER_DISPLAYABLE_EXCEPTION', 77);
 }
 
-// Since global variables are considered poor form in PHP, these are 
+// Since global variables are considered poor form in PHP, these are
 // defined as constants which could eventually replace the global variables -
 // although a settings table would be the best solution
 
@@ -140,6 +140,16 @@ if (!defined('GOOGLE_RECAPTCHA_V3_ACTION_RESET_PASSWORD'))
 if ('Codeception' == ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? ''))
 {
     // Update some config vars from codeception
+    if (isset($_SERVER['HTTP_X_PRIVACY_POLICY_URL']))
+    {
+        $config['privacy_policy_url'] = $_SERVER['HTTP_X_PRIVACY_POLICY_URL'];
+    }
+
+    if (isset($_SERVER['HTTP_X_IS_USER_REGISTRATION_ALLOWED']))
+    {
+        $config['is_user_registration_allowed'] = $_SERVER['HTTP_X_IS_USER_REGISTRATION_ALLOWED'];
+    }
+
     if (isset($_SERVER['HTTP_X_HOSTING_ORGANISATION']))
     {
         $config['hosting_organisation'] = $_SERVER['HTTP_X_HOSTING_ORGANISATION'];
@@ -148,10 +158,5 @@ if ('Codeception' == ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? ''))
     if (isset($_SERVER['HTTP_X_HOSTING_ORGANISATION_URL']))
     {
         $config['hosting_organisation_url'] = $_SERVER['HTTP_X_HOSTING_ORGANISATION_URL'];
-    }
-
-    if (isset($_SERVER['HTTP_X_PRIVACY_POLICY_URL']))
-    {
-        $config['privacy_policy_url'] = $_SERVER['HTTP_X_PRIVACY_POLICY_URL'];
     }
 } ;

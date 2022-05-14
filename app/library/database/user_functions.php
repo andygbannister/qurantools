@@ -16,6 +16,10 @@ DEFINE('USER_TYPE_SYSTEM', 'SYSTEM');
 DEFINE('ADMINISTRATOR_TYPE_ADMIN', 'ADMIN');
 DEFINE('ADMINISTRATOR_TYPE_SUPER_USER', 'SUPERUSER');
 
+// Block User modes
+define('BLOCK_MODE_BLOCK', 'block');
+define('BLOCK_MODE_UNBLOCK', 'unblock');
+
 /**
  * Functions related to database calls for users and the USERS table
  */
@@ -236,6 +240,17 @@ function register_consumer_user(array $insert_data): ?array
         );
     }
 
+    // ensure not a bogus email address
+    $sanitized_email = filter_var($insert_data['EMAIL'], FILTER_SANITIZE_EMAIL);
+
+    if (!filter_var($insert_data['EMAIL'], FILTER_VALIDATE_EMAIL) || $sanitized_email != $insert_data['EMAIL'])
+    {
+        throw new Exception(
+            "Invalid email address.",
+            USER_DISPLAYABLE_EXCEPTION
+        );
+    }
+
     // Ensure Email address is unique
     if (get_user_by_email($insert_data['EMAIL']))
     {
@@ -286,8 +301,7 @@ function register_user(array $insert_data): ?array
 {
     if (
         empty($insert_data['EMAIL'])
-    )
-    {
+    ) {
         throw new \Exception(
             'Arguments for register_user() must contain an email address'
         );
@@ -441,16 +455,51 @@ function unlock_user($user)
 }
 
 /**
+ * Blocks/unblocks a user
+ *
+ * Use: update_user_block($user, $block_mode);
+ *
+ * @param array $user       - row from USERS table to update
+ * @param array $block_mode - Are we blocking or unblocking ('block' or 'unblock')
+ *
+ * @return array $user      - updated $user record, or null if it didn't work
+ */
+function update_user_block(array $user, string $block_mode): ?array
+{
+    if (!(BLOCK_MODE_BLOCK == $block_mode || BLOCK_MODE_UNBLOCK == $block_mode))
+    {
+        throw new \Exception('Unknown $block_mode (' . $block_mode . ') for update_user_block()', 1);
+    }
+
+    $user = update_user_by_id($user['User ID'], ['Is Blocked' => (BLOCK_MODE_BLOCK == $block_mode ? '1' : '0')]);
+
+    return $user;
+}
+
+/**
  * Is the given user locked out of Qur'an Tools due to too many poor password attempts?
  *
  * Use: if (is_user_locked($user)) { ... }
- * @param array $user      - row from USERS table to update
+ * @param array $user      - row from USERS table
  *
  * @return boolean         - is the user locked?
  */
 function is_user_locked($user)
 {
     return $user['Fails Count'] >= MAXIMUM_PASSWORD_ATTEMPTS;
+}
+
+/**
+ * Is the given user blocked from Qur'an Tools by an admin?
+ *
+ * Use: if (is_user_blocked($user)) { ... }
+ * @param array $user      - row from USERS table
+ *
+ * @return boolean         - is the user blocked?
+ */
+function is_user_blocked($user)
+{
+    return 1 == $user['Is Blocked'];
 }
 
 /**
@@ -559,8 +608,7 @@ function update_user_by_id(
     int $user_id,
     array $columns,
     array $changed_by = null
-): ?array
-{
+): ?array {
     $user_id = db_quote($user_id);
 
     // Update User Name if First or Last Name are being updated.

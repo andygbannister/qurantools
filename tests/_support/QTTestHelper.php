@@ -362,6 +362,9 @@ class QTTestHelper extends \Codeception\Module
      * @param array  $to_delete Array of things to delete
      *        array  emails     Array of email addresses to delete
      *        array  user_ids   Array of user IDs to delete
+     *
+     * TODO: Hack function because we are not using a special test database.
+     * Could be deleted if a test database is used.
      */
     public function clearLoginLogs(
         $I,
@@ -391,6 +394,9 @@ class QTTestHelper extends \Codeception\Module
      * @param object $I
      * @param array  $to_delete Array of things to delete
      *        array  user_ids   Array of user IDs to delete
+     *
+     * TODO: Hack function because we are not using a special test database.
+     * Could be deleted if a test database is used.
      */
     public function clearSearchLogs(
         $I,
@@ -400,6 +406,12 @@ class QTTestHelper extends \Codeception\Module
         {
             $sql = "DELETE FROM `USAGE-VERSES-SEARCHES` 
                   WHERE `USER ID` IN (" . implode(', ', array_map('intval', $to_delete['user_ids'])) . ')';
+
+            db_query($sql);
+
+            $sql = "DELETE FROM `HISTORY` 
+                  WHERE `USER ID` IN (" . implode(', ', array_map('intval', $to_delete['user_ids'])) . ')';
+
             db_query($sql);
         }
     }

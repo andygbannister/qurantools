@@ -14,7 +14,7 @@
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class AcceptancePhpbrowserTester extends \Codeception\Actor
 {
     use _generated\AcceptancePhpbrowserTesterActions;

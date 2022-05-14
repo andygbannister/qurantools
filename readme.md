@@ -26,6 +26,8 @@ Dictionary data derived in part from Project Root List (<http://www.studyquran.c
 
 ### How to install
 
+See below for "How to update" - but it refers to elements of this "Install" section.
+
 Qur'an Tools is a pretty simple bare-metal PHP application. These are the general steps required for installation. See later sections for more detail.
 
 1. Install a webserver (probably Apache2), PHP7.3. MySQL 8 (or Maria DB 10.3), composer 2, Git and (optionally) Node with npm onto your server.
@@ -126,8 +128,6 @@ The database of Qur'anic information then needs to be imported into this databas
 ```
 
 If `QURAN-FULL-PARSE` has trouble recreating the primary key index, try splitting up the index create command. Depending on your version of MySQL, you may see a few warnings during the import phase. They are unlikely to be important - but it may pay to check the import log just to be on the safe side.
-
-After that, you will need to run any migrations (if there are any) in `/database/migrations/` to apply any database changes that were made to the database since the original schema was created.
 
 ### Install 3rd party Dependencies
 
@@ -273,7 +273,20 @@ error_reporting(E_ALL | E_STRICT);
 
 You should now be able to visit a URL like <https://qurantool.acme.org/> and try to reset your password.
 
-### How to deploy changes to the site
+### How to update
+
+#### Basic overview
+
+1. Look at the `CHANGELOG.md` for information about breaking changes and migrations.
+2. Put site into maintenance mode. (See `Other` section in `qt.ini`)
+3. With git, pull the changes from `https://github.com/andygbannister/qurantools` to either your fork, your staging server or (once you all seems to be working properly) on your live server.
+4. Run any database migrations with PHPMyAdmin, or at the MySQL command line
+5. Update new composer and/or node packages (if there are any)
+6. Populate any new settings in `qt.ini`
+7. Take site out of maintenance mode
+8. Check that things work properly
+
+#### More detail
 
 Assuming you are using git, then deploying changes to the server is just a matter of using the standard `git pull` commands. If you want to add pull hooks that rerun `composer install` (and `npm install` if working locally), then go ahead, but that is not part of this set-up.
 
@@ -288,6 +301,15 @@ To deploy to a server, ssh to that server and then:
 > git pull                # only necessary if the branch has been changed at origin
 ```
 
+#### Database migrations
+
+This is a bare metal PHP application with no special migration tools. So, each one will have to be run manually. Each migration contains SQL that needs to be run, as well as a reverse migration (commented out) that can be applied to return the database to it's prior state. Check `CHANGELOG.md` to know which migrations need to be run. `package.json` has the current version of the software.
+
+```bash
+> cd qt_root/database/migrations
+> mysql -u <database-user> -p <database-name> < migration_file_name.sql
+```
+
 ### Admin Levels
 
 Users can be tagged in the database of users with one of three levels of admin rights:
@@ -300,9 +322,9 @@ Users can be tagged in the database of users with one of three levels of admin r
 
 ### Development
 
-Should you wish to make changes to Quran Tools, here are some exra notes:
+Should you wish to make changes to Qur'an Tools, here are some exra notes:
 
-1. CSS (from LESS) and Javascript are compiled and built using [Brunch](https://brunch.io/). While developing run `./node_modules/brunch/bin/brunch watch`
+1. CSS (from LESS) and Javascript are compiled and built using [Brunch](https://brunch.io/). While developing run `./node_modules/brunch/bin/brunch watch`. You will need to run `npm install` to get brunch if you don't have it installed globally.
 
 ### Testing
 
@@ -326,6 +348,8 @@ As not all of the developers involved with QT wrote tests, automated testing of 
 
 #### Testing Notes/Gotchas
 
+- **IMPORTANT** It should go without saying, but do not run the tests on a production server. For historical reasons, during QT development, there was no separate testing database, so the tests run against the _same_ database - which means there is quite a bit of testing code written to delete test records added to the database. A dedicated testing database should be built and configured (with minimal Qur'anic seed test data), but it's not like this at the moment.
+
 - The first time you run codecept on a new install, some of the `_generated` files may need to be rebuilt. Do that with:
 
 ```bash
@@ -344,8 +368,6 @@ db_name: some_database # MySQL database name, such as qurantools-dev
 db_user: some_user # MySQL user, such as qurantools-dev
 db_password: xxx # password for that MySQL user
 ```
-
-- For historical reasons, during QT development, there was no separate testing database, so the tests ran against the development database - which means there is quite a bit of testing code written to delete test records added to the database. Codeception does support a reset/clean database function so this should be addressed at some stage. It does take quite a long time to import all the Qur'anic data into the database and recreate all the indexes - which is not an overhead that would be welcome in testing.
 
 - When running acceptance tests with WebDriver (see `tests/acceptance_webdriver.suite.yml`), `ChromeDriver` needs to be installed and running on the local machine. See <https://codeception.com/docs/modules/WebDriver#ChromeDriver> for more information about installation and then how to execute it from the command line on your testing machine. This will likely require adding it to your path in a .bashrc (or similar): e.g. `export PATH=$PATH:~/Downloads/ChromeDriver`. Once done, run this: `chromedriver --url-base=/wd/hub`
 

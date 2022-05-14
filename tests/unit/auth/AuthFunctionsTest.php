@@ -430,7 +430,7 @@ class AuthFunctionsTest extends \Codeception\Test\Unit
 
         $this->user = $this->tester->createUser($this->tester, [
             'Email Address' => $this->email,
-            'Password'      => 'wrong password',
+            'Password'      => $this->password,
             'Fails Count'   => MAXIMUM_PASSWORD_ATTEMPTS - 1,
             'Fail Time'     => time() - 10 // 10 seconds ago
         ]);
@@ -438,7 +438,7 @@ class AuthFunctionsTest extends \Codeception\Test\Unit
         $result = validate_email_password(
             $this->user,
             $this->email,
-            $this->password
+            'wrong password'
         );
 
         $updated_user = get_user_by_id($this->user['User ID']);
@@ -451,6 +451,30 @@ class AuthFunctionsTest extends \Codeception\Test\Unit
             'Due to multiple incorrect password attempts, your account has been locked for the next ' .
                 ACCOUNT_LOCK_TIME_MINUTES .
                 ' minutes.',
+            $_SESSION[$session_flag]
+        );
+    }
+
+    public function testValidate_email_passwordReturnsFalseForBlockedUser(): void
+    {
+        $session_flag = AUTH_CONSUMER_ERROR;
+
+        $this->user = $this->tester->createUser($this->tester, [
+            'Email Address' => $this->email,
+            'Password'      => $this->password,
+            'Is Blocked'    => true
+        ]);
+
+        $result = validate_email_password(
+            $this->user,
+            $this->email,
+            $this->password
+        );
+
+        $this->assertFalse($result, 'Blocked user should not have validated their email/password combo.');
+
+        $this->assertStringContainsString(
+            'You have been blocked from using Qur`an Tools.',
             $_SESSION[$session_flag]
         );
     }
@@ -507,7 +531,7 @@ class AuthFunctionsTest extends \Codeception\Test\Unit
         $this->assertFalse(isset($_SESSION['auth_redirect_link']));
         $this->assertFalse(isset($_SESSION['auth_password_reset']));
         $this->assertFalse(isset($_SESSION['auth_account_locked']));
-        $this->assertFalse(isset($_SESSION['auth_consumer_error']));
+        $this->assertFalse(isset($_SESSION[AUTH_CONSUMER_ERROR]));
     }
 
     // log_user_out

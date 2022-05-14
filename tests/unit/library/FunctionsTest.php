@@ -236,6 +236,12 @@ class FunctionsTest extends \Codeception\Test\Unit
         $this->assertEquals('Mary', $full_name);
     }
 
+    public function testGenerate_user_nameFiltersContent(): void
+    {
+        $full_name = generate_user_name('Mary <b></b>');
+        $this->assertEquals('Mary &lt;b&gt;&lt;/b&gt;', $full_name);
+    }
+
     // set_user_session_variables
     public function testSet_user_session_variablesThrowsWhenMissingUser(): void
     {

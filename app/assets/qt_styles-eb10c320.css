@@ -2425,40 +2425,41 @@ a.linky-no-hover {
 /* line 35, app/library/styles/less/dialogue_boxes.less */
 #PASSWORD_PANEL,
 #RESET_PASSWORD_PANEL,
+#BLOCK_USER_PANEL,
 #DELETE_USER_PANEL {
   display: block;
 }
-/* line 41, app/library/styles/less/dialogue_boxes.less */
+/* line 42, app/library/styles/less/dialogue_boxes.less */
 #update-user-dialog {
   display: block;
 }
-/* line 45, app/library/styles/less/dialogue_boxes.less */
+/* line 46, app/library/styles/less/dialogue_boxes.less */
 #FORMULAIC_PANEL {
   background-color: #e0e0e0;
   margin-left: 0px;
   width: 410px;
 }
-/* line 51, app/library/styles/less/dialogue_boxes.less */
+/* line 52, app/library/styles/less/dialogue_boxes.less */
 #ANALYTICS_PANEL {
   background-color: #e0e0e0;
   width: 270px;
   position: absolute;
   margin-right: 0px;
 }
-/* line 58, app/library/styles/less/dialogue_boxes.less */
+/* line 59, app/library/styles/less/dialogue_boxes.less */
 #TAGS_PANEL {
   background-color: #e0e0e0;
   width: 270px;
   position: absolute;
   margin-right: 50px;
 }
-/* line 65, app/library/styles/less/dialogue_boxes.less */
+/* line 66, app/library/styles/less/dialogue_boxes.less */
 .analytics-button {
   width: 267px;
   font-size: 12px;
   margin: 4px;
 }
-/* line 71, app/library/styles/less/dialogue_boxes.less */
+/* line 72, app/library/styles/less/dialogue_boxes.less */
 .tag-popup-panel {
   overflow: auto;
   max-height: 200px;
@@ -2467,12 +2468,12 @@ a.linky-no-hover {
   margin-top: 10px;
   margin-bottom: 5px;
 }
-/* line 80, app/library/styles/less/dialogue_boxes.less */
+/* line 81, app/library/styles/less/dialogue_boxes.less */
 .user-detail-pane-table-header {
   width: 880px;
   border: 1px solid black;
 }
-/* line 85, app/library/styles/less/dialogue_boxes.less */
+/* line 86, app/library/styles/less/dialogue_boxes.less */
 .user-detail-pane-table-content {
   overflow: auto;
   max-height: 600px;

@@ -4,14 +4,13 @@ session_start();
 require_once '../library/config.php';
 require_once 'library/functions.php';
 
-// access session variables that should have been set in auth.php
+// access session variables that should have been set in /auth/auth.php
+$redirect_link  = isset($_SESSION[AUTH_REDIRECT_LINK]) ? $_SESSION[AUTH_REDIRECT_LINK] : "/home.php";
+$password_reset = isset($_SESSION[AUTH_PASSWORD_RESET]) ? $_SESSION[AUTH_PASSWORD_RESET] : false;
+$account_locked = isset($_SESSION[AUTH_ACCOUNT_LOCKED]) ? $_SESSION[AUTH_ACCOUNT_LOCKED] : false;
+$consumer_error = isset($_SESSION[AUTH_CONSUMER_ERROR]) ? $_SESSION[AUTH_CONSUMER_ERROR] : "";
 
-$redirect_link  = isset($_SESSION['auth_redirect_link']) ? $_SESSION['auth_redirect_link'] : "/home.php";
-$password_reset = isset($_SESSION['auth_password_reset']) ? $_SESSION['auth_password_reset'] : false;
-$account_locked = isset($_SESSION['auth_account_locked']) ? $_SESSION['auth_account_locked'] : false;
-$consumer_error = isset($_SESSION['auth_consumer_error']) ? $_SESSION['auth_consumer_error'] : "";
-
-// wipe session fields
+// wipe session variables
 $_SESSION = [];
 
 echo '<!DOCTYPE html>';

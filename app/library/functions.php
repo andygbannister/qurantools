@@ -966,7 +966,7 @@ function show_value_or_missing(?string $value, ?string $label = ''): string
 }
 
 /**
- * Concatenates first and last names
+ * Cleans, trims and concatenates first and last names
  *
  * Use: $full_name = generate_user_name('bob  ','builder  ')
  *
@@ -979,7 +979,10 @@ function show_value_or_missing(?string $value, ?string $label = ''): string
  */
 function generate_user_name(?string $first_name = '', ?string $last_name = ''): ?string
 {
-    $user_name = trim(join(' ', [trim($first_name), trim($last_name)]));
+    $first_name = htmlspecialchars(trim($first_name));
+    $last_name  = htmlspecialchars(trim($last_name));
+
+    $user_name = trim(join(' ', [$first_name, $last_name]));
 
     return empty($user_name) ? null : $user_name;
 }
@@ -1234,7 +1237,6 @@ function branding_text(String $boilerplate = ''): ?string
  */
 function show_contact_us_link(): bool
 {
-
     global $config;
 
     if (!isset($config['show_contact_us_link']))

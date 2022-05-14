@@ -47,7 +47,6 @@ class AuthCest
     public function _after($I, $scenario)
     {
         // Codeception can't remove changes the application makes to the database
-
         $user_ids   = [];
         $user_ids[] = $this->user['User ID'] ?? null;
         $user_ids[] = $this->locked_user['User ID'] ?? null;
@@ -289,5 +288,29 @@ class AuthCest
 
         // UI correct
         $I->see("Your password has been reset by an administrator and you must choose a new one", '.error-message');
+    }
+
+    public function blockedUserCannotLogin(AcceptancePhpbrowserTester $I, $scenario)
+    {
+        // put reset test user in database
+        $I->updateInDatabase('USERS', ['Is Blocked' => true], ['email address' => $this->email]);
+
+        // sanity check to ensure the createUser worked properly
+        $I->seeInDatabase(
+            'USERS',
+            [
+                'email address' => $this->email,
+                'Is Blocked'    => true
+            ]
+        );
+
+        // do the test
+        $I->amOnPage($I->getApplicationPage("login"));
+        $I->fillField('EMAIL_ADDRESS', $this->email);
+        $I->fillField('PASSWORD', $this->password);
+        $I->click('#login-button');
+
+        // UI is correct
+        $I->see("You have been blocked from using Qur`an Tools.");
     }
 }
