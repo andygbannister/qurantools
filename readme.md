@@ -2,10 +2,6 @@
 
 Qur’an Tools is a digital tool for the critical analysis and study of the text of the Qur’an.
 
-## Team
-
-Qur’an Tools has been designed and programmed by Dr. Andrew G. Bannister and Dr. R. Michael McCoy with help from other developers.
-
 ## Copyright
 
 Qur’an Tools is an open source project and is available under the GNU public license with terms of use.
